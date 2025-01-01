@@ -52,7 +52,7 @@ function ContactForm() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-y-6 md:flex-row md:gap-x-10">
-          <div className="mx-auto mt-5 w-full max-w-md basis-1/2 rounded-xl border border-gray-100 p-5 shadow-md md:mt-10">
+          <div className="mx-auto mt-5 w-full max-w-md basis-1/2 rounded-xl border border-gray-100 p-5 md:mt-10">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
