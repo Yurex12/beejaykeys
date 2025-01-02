@@ -3,8 +3,8 @@ import { linksProps } from "../layoutTypes";
 export const links: linksProps = [
   { id: "home", name: "Home" },
   { id: "services", name: "Services" },
-  { id: "about-me", name: "About Me" },
-  { id: "contact-me", name: "Contact Me" },
+  { id: "about-us", name: "About Us" },
+  { id: "contact-us", name: "Contact Us" },
 ];
 
 export const footerLinks = [
@@ -29,12 +29,12 @@ export const footerLinks = [
     name: "Company",
     links: [
       {
-        title: "About Me",
-        id: "about-me",
+        title: "About Us",
+        id: "about-us",
       },
       {
-        title: "Contact Me",
-        id: "contact-me",
+        title: "Contact Us",
+        id: "contact-us",
       },
       {
         title: "Support",

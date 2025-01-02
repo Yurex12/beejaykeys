@@ -4,16 +4,9 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Question } from "../types";
 
-type Question = {
-  id: string;
-  ques: string;
-  ans: string;
-};
-
-type Questions = Question[];
-
-const questions: Questions = [
+const questions: Question[] = [
   {
     id: "20205166",
     ques: "Lorem ipsum dolor sit amet",

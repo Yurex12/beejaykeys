@@ -16,8 +16,8 @@ function App() {
         <Route element={<AppLayout />}>
           <Route index element={<Navigate replace to="/home" />} />
           <Route path="home" element={<HomePage />} />
-          <Route path="about-me" element={<AboutPage />} />
-          <Route path="contact-me" element={<ContactPage />} />
+          <Route path="about-us" element={<AboutPage />} />
+          <Route path="contact-us" element={<ContactPage />} />
           <Route path="services" element={<ServicePage />} />
         </Route>
         <Route path="login" element={<LoginPage />} />

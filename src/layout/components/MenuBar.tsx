@@ -8,7 +8,7 @@ function MenuBar({ handleOpenSheet }: { handleOpenSheet: () => void }) {
       <HiUser />
 
       <div className="hidden md:block">
-        <Button className="bg-green-600 px-6 py-4 text-sm font-medium text-white hover:bg-green-700">
+        <Button className="bg-green-600 px-6 text-sm font-medium text-white hover:bg-green-700">
           Login
         </Button>
       </div>
