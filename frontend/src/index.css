@@ -1,0 +1,82 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap");
+/* font-family: 'Manrope', sans-serif; */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+    --brandGreen: theme(colors.green.500);
+    --brandGray: theme(colors.gray.600);
+    --brandBlack: theme(colors.gray.900);
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  ::-webkit-scrollbar {
+    @apply size-0;
+  }
+
+  body {
+    @apply font-manrope font-medium text-gray-600;
+  }
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer utilities {
+  .sheet-content button[type="button"] {
+    display: none;
+  }
+
+  .sheet-content .active span {
+    @apply rounded-md border-l-green-600 bg-gray-50 text-gray-800 shadow-sm;
+  }
+
+  .custom-pagination .swiper-pagination-bullet {
+    @apply mx-1 my-0 size-3 bg-green-500 sm:mx-2;
+  }
+
+  /* If you're customizing pagination bullets as well */
+  .swiper-pagination-bullet {
+    background-color: var(--brandGreen);
+  }
+
+  .swiper-pagination-bullet-active {
+    background-color: var(--brandGreen);
+  }
+}
+
+/* On hover, restore the width to display the scrollbar */
+#project-table::-webkit-scrollbar {
+  @apply size-2;
+}
+
+/* Optional: style the track and thumb when visible */
+#project-table::-webkit-scrollbar-track {
+  @apply rounded-full bg-gray-200;
+}
+
+#project-table::-webkit-scrollbar-thumb {
+  @apply rounded-full bg-gray-400;
+}
+
+/* Hide horizontal scrollbar */
+#project-table::-webkit-scrollbar:horizontal {
+  height: 0;
+}
