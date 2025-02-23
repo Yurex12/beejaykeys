@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { testimonials } from "../constants";
 
-function Testimonial() {
+function Testimonials() {
   return (
     <section>
       <div className="container mx-auto mt-20 px-6">
@@ -64,4 +64,4 @@ function Testimonial() {
   );
 }
 
-export default Testimonial;
+export default Testimonials;

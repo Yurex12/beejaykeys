@@ -15,7 +15,7 @@ import {
   AdminFaqsPage,
   AdminLinkPage,
   AdminTestimonialsPage,
-  AdminSkillsPage,
+  AdminServicesPage,
   MessagesPage,
 } from "./pages";
 
@@ -49,7 +49,7 @@ function App() {
             path="dashboard/testimonials"
             element={<AdminTestimonialsPage />}
           />
-          <Route path="dashboard/skills" element={<AdminSkillsPage />} />
+          <Route path="dashboard/services" element={<AdminServicesPage />} />
           <Route path="dashboard/messages" element={<MessagesPage />} />
         </Route>
       </Routes>

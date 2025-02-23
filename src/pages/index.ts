@@ -10,7 +10,7 @@ import AdminProjectsPage from "./AdminProjectsPage.tsx";
 import AdminFaqsPage from "./AdminFaqsPage.tsx";
 import AdminLinkPage from "./AdminLinkPage.tsx";
 import AdminTestimonialsPage from "./AdminTestimonialsPage.tsx";
-import AdminSkillsPage from "./AdminSkillsPage.tsx";
+import AdminServicesPage from "./AdminServicesPage.tsx";
 import MessagesPage from "./MessagesPage.tsx";
 
 export {
@@ -25,6 +25,6 @@ export {
   AdminFaqsPage,
   AdminLinkPage,
   AdminTestimonialsPage,
-  AdminSkillsPage,
+  AdminServicesPage,
   MessagesPage,
 };
