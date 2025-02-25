@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 
 type AdminContentHeaderProps = {
   title: string;
-  onClick?: VoidFunction;
+  onClick?: () => void;
 };
 
 function AdminContentHeader({ title, onClick }: AdminContentHeaderProps) {

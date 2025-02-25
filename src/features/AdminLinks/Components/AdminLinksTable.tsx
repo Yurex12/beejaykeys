@@ -30,7 +30,11 @@ const links = [
   },
 ];
 
-export default function AdminLinksTable() {
+export default function AdminLinksTable({
+  openServiceDialog,
+}: {
+  openServiceDialog: () => void;
+}) {
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">
@@ -58,7 +62,9 @@ export default function AdminLinksTable() {
                       <HiEllipsisVertical className="text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem onClick={openServiceDialog}>
+                        Edit
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>

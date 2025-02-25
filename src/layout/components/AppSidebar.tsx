@@ -71,8 +71,8 @@ const items: Item[] = [
         url: "/dashboard/testimonials",
       },
       {
-        title: "Skills",
-        url: "/dashboard/skills",
+        title: "Services",
+        url: "/dashboard/services",
       },
     ],
   },

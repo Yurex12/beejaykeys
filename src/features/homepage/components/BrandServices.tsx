@@ -3,8 +3,23 @@ import { Button } from "@/components/ui/button";
 import Card from "@/components/Card";
 
 import { services } from "../constants";
+import { useEffect } from "react";
+import { getService, getServices } from "@/services/apiServices";
 
 function BrandServices() {
+  useEffect(() => {
+    async function fetctData() {
+      try {
+        const res = await getServices();
+        console.log(res);
+        alert(res.message);
+      } catch (error) {
+        alert(error);
+      }
+    }
+
+    fetctData();
+  }, []);
   return (
     <section>
       <div className="container mx-auto mt-16 px-6 md:mt-20">

@@ -4,8 +4,23 @@ import { TbBrandX } from "react-icons/tb";
 import { footerLinks } from "../constants";
 import Logo from "./Logo";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { getLinks, getLink } from "@/services/apiLinks";
 
 function Footer() {
+  useEffect(() => {
+    async function fetctData() {
+      try {
+        const res = await getLink("telegram");
+        console.log(res);
+        alert(res.message);
+      } catch (error) {
+        alert(error);
+      }
+    }
+
+    fetctData();
+  }, []);
   return (
     <footer className="mt-10 bg-gray-50 shadow-sm">
       <div className="mx-auto max-w-[1440px] px-10">

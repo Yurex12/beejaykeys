@@ -5,8 +5,23 @@ import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { testimonials } from "../constants";
+import { useEffect } from "react";
+import { getTestimonial, getTestimonials } from "@/services/apiTestimonials";
 
 function Testimonials() {
+  useEffect(() => {
+    async function fetctData() {
+      try {
+        const res = await getTestimonial("67bcb2e46604ffd2d502642d");
+        console.log(res);
+        alert(res.message);
+      } catch (error) {
+        alert(error);
+      }
+    }
+
+    fetctData();
+  }, []);
   return (
     <section>
       <div className="container mx-auto mt-20 px-6">

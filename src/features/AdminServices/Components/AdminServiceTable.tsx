@@ -16,7 +16,11 @@ import {
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { services } from "@/features/homepage/constants";
 
-export default function AdminServiceTable() {
+export default function AdminServiceTable({
+  openServiceDialog,
+}: {
+  openServiceDialog: () => void;
+}) {
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">
@@ -24,10 +28,10 @@ export default function AdminServiceTable() {
           {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
-              <TableHead className="">Skill</TableHead>
-              <TableHead className="">Descripion</TableHead>
-              <TableHead className="">Roles</TableHead>
-              <TableHead className="">Edit</TableHead>
+              <TableHead>Skill</TableHead>
+              <TableHead>Descripion</TableHead>
+              <TableHead>Roles</TableHead>
+              <TableHead>Edit</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -53,7 +57,9 @@ export default function AdminServiceTable() {
                       <HiEllipsisVertical className="text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem onClick={openServiceDialog}>
+                        Edit
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>

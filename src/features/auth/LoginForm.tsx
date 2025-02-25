@@ -12,6 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { login } from "@/services/apiAuth";
+import SpinnerMini from "@/components/SpinnerMini";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a correct Email" }),
@@ -27,15 +29,22 @@ export default function LoginForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(details: z.infer<typeof formSchema>) {
+    try {
+      const res = await login(details);
+
+      alert(res.message);
+    } catch (error) {
+      alert(error);
+    }
+
     form.reset();
   }
 
   return (
     <div className="mx-auto mt-20 max-w-sm px-4">
       <div className="flex flex-col items-center text-center">
-        <h1 className="t text-2xl font-bold">Welcome back</h1>
+        <h1 className="text-2xl font-bold">Welcome back</h1>
         <p className="text-muted-foreground mt-3 text-balance">
           Login to your Portfolio
         </p>
@@ -55,6 +64,7 @@ export default function LoginForm() {
                     placeholder="example@gmail.com"
                     {...field}
                     className="focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
+                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -74,6 +84,7 @@ export default function LoginForm() {
                     className="focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
                     placeholder="*********"
                     {...field}
+                    disabled={form.formState.isSubmitting}
                   />
                 </FormControl>
                 <FormMessage />
@@ -82,9 +93,10 @@ export default function LoginForm() {
           />
           <Button
             type="submit"
-            className="block w-full bg-green-600 text-white hover:bg-green-700"
+            className="block w-full bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
+            disabled={form.formState.isSubmitting}
           >
-            Submit
+            {form.formState.isSubmitting ? <SpinnerMini /> : "Login"}
           </Button>
         </form>
       </Form>
