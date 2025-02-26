@@ -1,15 +1,13 @@
 import {
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { Button } from "./ui/button";
 import SpinnerMini from "./SpinnerMini";
+import { Button } from "./ui/button";
 
 type ConfirmDeleteProps = {
   resourceName: string;

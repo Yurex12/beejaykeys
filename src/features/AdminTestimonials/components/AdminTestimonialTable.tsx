@@ -49,47 +49,51 @@ export default function AdminTestimonialTable({
   if (!testimonials?.length) return <NoData />;
 
   return (
-    <section className="mt-10 md:overflow-scroll">
-      <div className="px-6 md:px-14">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Review</TableHead>
-              <TableHead>Edit/Delete</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {testimonials.map((testimonial) => (
-              <TableRow key={testimonial._id}>
-                <TableCell className="whitespace-nowrap text-xs">
-                  {testimonial.name}
-                </TableCell>
-                <TableCell className="text-xs">{testimonial.review}</TableCell>
-                <TableCell>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger className="ml-8">
-                      <HiEllipsisVertical className="text-2xl" />
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent>
-                      <DropdownMenuItem
-                        onClick={() => handleTestimonialEdit(testimonial)}
-                      >
-                        Edit
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        onClick={() => handleDelete(testimonial._id)}
-                      >
-                        Delete
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </TableCell>
+    <>
+      <section className="mt-10 md:overflow-scroll">
+        <div className="px-6 md:px-14">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Review</TableHead>
+                <TableHead>Edit/Delete</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </div>
+            </TableHeader>
+            <TableBody>
+              {testimonials.map((testimonial) => (
+                <TableRow key={testimonial._id}>
+                  <TableCell className="whitespace-nowrap text-xs">
+                    {testimonial.name}
+                  </TableCell>
+                  <TableCell className="text-xs">
+                    {testimonial.review}
+                  </TableCell>
+                  <TableCell>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger className="ml-8">
+                        <HiEllipsisVertical className="text-2xl" />
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent>
+                        <DropdownMenuItem
+                          onClick={() => handleTestimonialEdit(testimonial)}
+                        >
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleDelete(testimonial._id)}
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </section>
       <ConfirmDelete
         open={open}
         handleOpen={setOpen}
@@ -101,6 +105,6 @@ export default function AdminTestimonialTable({
         }
         disabled={isDeleting}
       />
-    </section>
+    </>
   );
 }

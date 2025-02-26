@@ -8,3 +8,5 @@ export const faqSchema = z.object({
     .string()
     .min(10, { message: "Answer must be more than 10 characters." }),
 });
+
+export type TfaqSchema = z.infer<typeof faqSchema>;

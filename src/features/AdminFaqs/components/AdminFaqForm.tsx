@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
@@ -13,31 +12,64 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
-import { faqSchema } from "@/schema/faqSchema";
+import { faqSchema, TfaqSchema } from "@/schema/faqSchema";
+import { Faq } from "../types";
+import { useEditFaq } from "../hooks/useEditFaq";
+import { useCreateFaq } from "../hooks/useCreateFaq";
 
 export default function AdminFaqForm({
   closeFaqDialog,
+  faqToEdit,
 }: {
   closeFaqDialog: () => void;
+  faqToEdit: Faq | {};
 }) {
-  const form = useForm<z.infer<typeof faqSchema>>({
+  const { editFaq, isEditing } = useEditFaq();
+  const { createFaq, isDeleting } = useCreateFaq();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { _id: editId, ...otherValues } = faqToEdit;
+
+  const isEditSession = Boolean(editId);
+
+  const form = useForm<TfaqSchema>({
     resolver: zodResolver(faqSchema),
-    defaultValues: {
-      answer: "",
-      question: "",
-    },
+    defaultValues: isEditSession
+      ? otherValues
+      : {
+          answer: "",
+          question: "",
+        },
   });
 
-  async function onSubmit(details: z.infer<typeof faqSchema>) {
-    await new Promise((res) => setTimeout(res, 2000));
-    console.log(details);
+  const isWorking = isDeleting || isEditing || form.formState.isSubmitting;
 
-    form.reset();
-    closeFaqDialog();
+  async function onSubmit(details: TfaqSchema) {
+    if (isEditSession) {
+      editFaq(
+        { data: details, id: editId },
+        {
+          onSuccess: () => {
+            form.reset();
+            closeFaqDialog();
+          },
+        },
+      );
+    } else {
+      createFaq(details, {
+        onSuccess: () => {
+          form.reset();
+          closeFaqDialog();
+        },
+      });
+    }
   }
 
   return (
     <Form {...form}>
+      <h1 className="text-xl text-gray-700">
+        {isEditSession ? "Edit Testimonial" : "Create a new Testimonial"}
+      </h1>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-6">
         <FormField
           control={form.control}
@@ -52,7 +84,7 @@ export default function AdminFaqForm({
                   placeholder="whats your name"
                   {...field}
                   className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
-                  disabled={form.formState.isSubmitting}
+                  disabled={isWorking}
                 />
               </FormControl>
               <FormMessage />
@@ -72,7 +104,7 @@ export default function AdminFaqForm({
                   className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
                   placeholder="Beejakeys"
                   {...field}
-                  disabled={form.formState.isSubmitting}
+                  disabled={isWorking}
                 />
               </FormControl>
               <FormMessage />
@@ -80,13 +112,19 @@ export default function AdminFaqForm({
           )}
         />
         <div className="flex justify-end">
-          <Button
-            type="submit"
-            className="block w-32 bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
-            disabled={form.formState.isSubmitting}
-          >
-            {form.formState.isSubmitting ? <SpinnerMini /> : "Add Faq"}
-          </Button>
+          <div className="flex justify-end">
+            <Button
+              type="submit"
+              className="block w-fit bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
+              disabled={isWorking}
+            >
+              {isWorking ? (
+                <SpinnerMini />
+              ) : (
+                <span>{isEditSession ? "Edit Faq" : "Create Faq"}</span>
+              )}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

@@ -1,5 +1,6 @@
-import { Testimonial } from "@/features/AdminTestimonials/types";
 import api from "./api";
+
+import { Testimonial } from "@/features/AdminTestimonials/types";
 
 import { TtestimonialData } from "@/schema/testimonialSchema";
 
