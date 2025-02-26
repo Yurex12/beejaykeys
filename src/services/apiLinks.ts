@@ -1,10 +1,10 @@
-import axios from "axios";
+import api from "./api";
 
-const url = "http://localhost:8080/api/links";
+// const url = "http://localhost:8080/api/links";
 
 export async function getLinks() {
   try {
-    const { data } = await axios.get(url);
+    const { data } = await api.get("/links");
     return data;
   } catch (error: any) {
     console.error("Error:", error);
@@ -15,7 +15,7 @@ export async function getLinks() {
 
 export async function getLink(name: string) {
   try {
-    const { data } = await axios.get(`${url}/${name}`);
+    const { data } = await api.get(`/links/${name}`);
     return data;
   } catch (error: any) {
     console.error("Error:", error);

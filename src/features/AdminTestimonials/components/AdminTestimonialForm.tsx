@@ -12,33 +12,66 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { testimonialSchema } from "@/schema/testimonialSchema";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  testimonialSchema,
+  TtestimonialData,
+} from "@/schema/testimonialSchema";
+import { useCreateTestimonials } from "../hooks/useCreateTestimonial";
+
+import { useEditTestimonials } from "../hooks/useEditTestimonial";
+
+import { Testimonial } from "../types";
 
 export default function AdminTestimonialForm({
   closeTestimonialDialog,
+  testimonailToEdit,
 }: {
   closeTestimonialDialog: () => void;
+  testimonailToEdit: Testimonial | {};
 }) {
-  const form = useForm<z.infer<typeof testimonialSchema>>({
+  const { isDeleting, createTestimonial } = useCreateTestimonials();
+  const { editTestimonial, isEditing } = useEditTestimonials();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { _id: editId, color, ...otherValues } = testimonailToEdit;
+
+  const isEditSession = Boolean(editId);
+
+  const form = useForm<TtestimonialData>({
     resolver: zodResolver(testimonialSchema),
-    defaultValues: {
-      name: "",
-      review: "",
-    },
+    defaultValues: isEditSession ? otherValues : { name: "", review: "" },
   });
 
-  async function onSubmit(details: z.infer<typeof testimonialSchema>) {
-    await new Promise((res) => setTimeout(res, 2000));
-    console.log(details);
+  const isWorking = isDeleting || isEditing || form.formState.isSubmitting;
 
-    form.reset();
-    closeTestimonialDialog();
+  async function onSubmit(details: TtestimonialData) {
+    if (isEditSession) {
+      editTestimonial(
+        { data: details, id: editId },
+        {
+          onSuccess: () => {
+            form.reset();
+            closeTestimonialDialog();
+          },
+        },
+      );
+    } else {
+      createTestimonial(details, {
+        onSuccess: () => {
+          form.reset();
+          closeTestimonialDialog();
+        },
+      });
+    }
   }
 
   return (
     <Form {...form}>
+      <h1 className="text-xl text-gray-700">
+        {isEditSession ? "Edit Testimonial" : "Create a new Testimonial"}
+      </h1>
       <form onSubmit={form.handleSubmit(onSubmit)} className="mt-4 space-y-6">
         <FormField
           control={form.control}
@@ -53,7 +86,7 @@ export default function AdminTestimonialForm({
                   placeholder="John doe"
                   {...field}
                   className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
-                  disabled={form.formState.isSubmitting}
+                  disabled={isWorking}
                 />
               </FormControl>
               <FormMessage />
@@ -73,7 +106,7 @@ export default function AdminTestimonialForm({
                   className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
                   placeholder="An amazing guy"
                   {...field}
-                  disabled={form.formState.isSubmitting}
+                  disabled={isWorking}
                 />
               </FormControl>
               <FormMessage />
@@ -83,10 +116,16 @@ export default function AdminTestimonialForm({
         <div className="flex justify-end">
           <Button
             type="submit"
-            className="block w-32 bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
-            disabled={form.formState.isSubmitting}
+            className="block w-fit bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
+            disabled={isWorking}
           >
-            {form.formState.isSubmitting ? <SpinnerMini /> : "Add Testimonial"}
+            {isWorking ? (
+              <SpinnerMini />
+            ) : (
+              <span>
+                {isEditSession ? "Edit Testimonial" : "Create Testimonial"}
+              </span>
+            )}
           </Button>
         </div>
       </form>

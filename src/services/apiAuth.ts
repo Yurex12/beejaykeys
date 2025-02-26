@@ -1,15 +1,13 @@
-import axios from "axios";
-
 import { TUserSchema } from "../schema/userSchema";
-
-const url = "http://localhost:8080/api/users";
+import api from "./api";
 
 export async function login({ email, password }: Partial<TUserSchema>) {
-  await new Promise((res) => setTimeout(res, 10000));
+  // await new Promise((res) => setTimeout(res, 10000));
   try {
-    const res = await axios.post(`${url}/login`, { email, password });
+    const { data } = await api.post(`users/login`, { email, password });
+    console.log(data);
 
-    return res.data;
+    return data;
   } catch (error: any) {
     console.error("Login error:", error);
 

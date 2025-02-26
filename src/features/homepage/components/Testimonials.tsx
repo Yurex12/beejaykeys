@@ -1,27 +1,19 @@
+import { useTestimonials } from "@/features/AdminTestimonials/hooks/useTestimonials";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { testimonials } from "../constants";
-import { useEffect } from "react";
-import { getTestimonial, getTestimonials } from "@/services/apiTestimonials";
-
 function Testimonials() {
-  useEffect(() => {
-    async function fetctData() {
-      try {
-        const res = await getTestimonial("67bcb2e46604ffd2d502642d");
-        console.log(res);
-        alert(res.message);
-      } catch (error) {
-        alert(error);
-      }
-    }
+  const { testimonials, error, isLoading } = useTestimonials();
 
-    fetctData();
-  }, []);
+  if (isLoading) return <p>Loading...</p>;
+
+  if (error) return <p>Error</p>;
+
+  if (!testimonials?.length) return <p>No data found</p>;
+
   return (
     <section>
       <div className="container mx-auto mt-20 px-6">
@@ -52,8 +44,8 @@ function Testimonials() {
         >
           {testimonials.map((testimonial) => (
             <SwiperSlide
-              key={testimonial.id}
-              className="swiper-slide space-y-4 rounded-md border border-gray-200 p-5"
+              key={testimonial._id}
+              className="swiper-slide h-auto space-y-4 rounded-md border border-gray-200 p-5"
             >
               {/* heading */}
               <div className="flex items-center gap-x-4">

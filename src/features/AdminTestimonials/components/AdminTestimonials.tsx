@@ -1,28 +1,45 @@
+import { useState } from "react";
+
 import AdminContentHeader from "@/components/AdminContentHeader";
 import CreateEditDialog from "@/components/CreateEditDialog";
-import { useState } from "react";
+
 import AdminTestimonialForm from "./AdminTestimonialForm";
 import AdminTestimonialTable from "./AdminTestimonialTable";
 
-function AdminTestimonials() {
-  const [open, setOpen] = useState(false);
+import { Testimonial } from "../types";
 
-  const openTestimonialDialog = () => setOpen(true);
-  const closeTestimonialDialog = () => setOpen(false);
+function AdminTestimonials() {
+  const [openForm, setOpenForm] = useState(false);
+  const [testimonailToEdit, setTestimonialToEdit] = useState<Testimonial | {}>(
+    {},
+  );
+
+  const resetTestimonialToEdit = () => setTestimonialToEdit({});
+
+  function handleOpenChange(value: boolean) {
+    if (!value) resetTestimonialToEdit();
+    setOpenForm(value);
+  }
+
+  function handleTestimonialEdit(testimonial: Testimonial) {
+    setTestimonialToEdit(testimonial);
+    handleOpenChange(true);
+  }
+
   return (
     <div className="flex flex-col md:h-screen">
       <AdminContentHeader
         title="Testmonoials"
-        onClick={openTestimonialDialog}
+        onClick={() => handleOpenChange(true)}
       />
-      <CreateEditDialog
-        title="Add a new Testimonial"
-        open={open}
-        onOpenChange={setOpen}
-      >
-        <AdminTestimonialForm closeTestimonialDialog={closeTestimonialDialog} />
+      <CreateEditDialog open={openForm} onOpenChange={handleOpenChange}>
+        <AdminTestimonialForm
+          closeTestimonialDialog={() => handleOpenChange(false)}
+          testimonailToEdit={testimonailToEdit}
+        />
       </CreateEditDialog>
-      <AdminTestimonialTable />
+
+      <AdminTestimonialTable handleTestimonialEdit={handleTestimonialEdit} />
     </div>
   );
 }

@@ -35,7 +35,7 @@ function ProjectFilter() {
           ))}
         </ul>
 
-        <h1 className="mt-6 text-center text-2xl font-extrabold capitalize text-gray-700 sm:text-3xl lg:text-4xl xl:text-5xl">
+        <h1 className="mt-8 text-center text-2xl font-extrabold capitalize text-gray-700 sm:text-3xl lg:text-4xl xl:text-5xl">
           {activeProject.split("-").join(" ")}
         </h1>
       </div>

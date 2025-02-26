@@ -12,8 +12,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login } from "@/services/apiAuth";
+import { login as loginApi } from "@/services/apiAuth";
 import SpinnerMini from "@/components/SpinnerMini";
+import { useAuth } from "@/contexts/authContext";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a correct Email" }),
@@ -21,6 +22,7 @@ const formSchema = z.object({
 });
 
 export default function LoginForm() {
+  const { login } = useAuth();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,9 +33,10 @@ export default function LoginForm() {
 
   async function onSubmit(details: z.infer<typeof formSchema>) {
     try {
-      const res = await login(details);
+      const data = await loginApi(details);
+      login(data.accessToken, data.userId);
 
-      alert(res.message);
+      alert(data.message);
     } catch (error) {
       alert(error);
     }

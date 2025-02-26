@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   Table,
   TableBody,
@@ -15,42 +17,71 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { HiEllipsisVertical } from "react-icons/hi2";
-import { testimonials } from "@/features/homepage/constants";
 
-export default function AdminTestimonialTable() {
+import { ConfirmDelete } from "@/components/ConfirmDelete";
+import NoData from "@/components/NoData";
+
+import { useDeleteTestimonial } from "../hooks/useDeleteTestimonial";
+import { useTestimonials } from "../hooks/useTestimonials";
+
+import { Testimonial } from "../types";
+
+export default function AdminTestimonialTable({
+  handleTestimonialEdit,
+}: {
+  handleTestimonialEdit: (testimonial: Testimonial) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [testimonialId, setTestimonialId] = useState("");
+
+  const { testimonials, isLoading, error } = useTestimonials();
+  const { deleteTestimonial, isDeleting } = useDeleteTestimonial();
+
+  function handleDelete(id: string) {
+    setOpen(true);
+    setTestimonialId(id);
+  }
+
+  if (isLoading) return <p>Loading</p>;
+
+  if (error) return <p>Error</p>;
+
+  if (!testimonials?.length) return <NoData />;
+
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">
         <Table>
-          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">Name</TableHead>
-              <TableHead className="text-center">Review</TableHead>
-              <TableHead className="text-center">Color</TableHead>
-              <TableHead className="text-center">Edit/Delete</TableHead>
+              <TableHead>Name</TableHead>
+              <TableHead>Review</TableHead>
+              <TableHead>Edit/Delete</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {testimonials.map((testimonial) => (
-              <TableRow key={testimonial.id}>
+              <TableRow key={testimonial._id}>
                 <TableCell className="whitespace-nowrap text-xs">
                   {testimonial.name}
                 </TableCell>
-                <TableCell className="whitespace-nowrap text-xs md:whitespace-normal">
-                  {testimonial.review}
-                </TableCell>
-                <TableCell className="whitespace-nowrap text-xs md:whitespace-normal">
-                  {testimonial.color}
-                </TableCell>
+                <TableCell className="text-xs">{testimonial.review}</TableCell>
                 <TableCell>
                   <DropdownMenu>
                     <DropdownMenuTrigger className="ml-8">
                       <HiEllipsisVertical className="text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem>Delete</DropdownMenuItem>
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleTestimonialEdit(testimonial)}
+                      >
+                        Edit
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => handleDelete(testimonial._id)}
+                      >
+                        Delete
+                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>
@@ -59,6 +90,17 @@ export default function AdminTestimonialTable() {
           </TableBody>
         </Table>
       </div>
+      <ConfirmDelete
+        open={open}
+        handleOpen={setOpen}
+        resourceName="Testimonial"
+        onConfirm={() =>
+          deleteTestimonial(testimonialId, {
+            onSettled: () => setOpen(false),
+          })
+        }
+        disabled={isDeleting}
+      />
     </section>
   );
 }
