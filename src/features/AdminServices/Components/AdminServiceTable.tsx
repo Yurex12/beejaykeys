@@ -14,13 +14,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HiEllipsisVertical } from "react-icons/hi2";
-import { services } from "@/features/homepage/constants";
+// import { services } from "@/features/homepage/constants";
+import { Service } from "../types";
+import { useServices } from "../hooks/useServices";
 
 export default function AdminServiceTable({
-  openServiceDialog,
+  handleServiceEdit,
 }: {
-  openServiceDialog: () => void;
+  handleServiceEdit: (service: Service) => void;
 }) {
+  const { services, isLoading, error } = useServices();
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (error) return <p>Error</p>;
+
+  if (!services?.length) return <p>No data found</p>;
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">
@@ -36,17 +45,16 @@ export default function AdminServiceTable({
           </TableHeader>
           <TableBody>
             {services.map((service) => (
-              <TableRow key={service.title}>
-                <TableCell className="truncate text-xs">
-                  {service.title}
+              <TableRow key={service._id}>
+                <TableCell className="whitespace-nowrap text-xs">
+                  {`${service.skill.split("-").join(" ").charAt(0).toUpperCase()}${service.skill.split("-").join(" ").slice(1)}`}
                 </TableCell>
                 <TableCell className="text-xs">{service.description}</TableCell>
                 <TableCell className="text-xs">
                   <ul>
-                    {service.roles.map((role, i) => (
-                      <li>
-                        {role}
-                        {i === service.roles.length - 1 ? "." : ","}
+                    {service.roles.split(",").map((role) => (
+                      <li key={role} className="whitespace-nowrap">
+                        {role},
                       </li>
                     ))}
                   </ul>
@@ -57,7 +65,9 @@ export default function AdminServiceTable({
                       <HiEllipsisVertical className="text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={openServiceDialog}>
+                      <DropdownMenuItem
+                        onClick={() => handleServiceEdit(service)}
+                      >
                         Edit
                       </DropdownMenuItem>
                     </DropdownMenuContent>

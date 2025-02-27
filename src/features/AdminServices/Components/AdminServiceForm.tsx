@@ -1,6 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
@@ -12,48 +11,57 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { serviceSchema } from "@/schema/serviceSchema";
 import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { serviceSchema, TserviceSchema } from "@/schema/serviceSchema";
+import { useEditService } from "../hooks/useEditService";
+import { Service } from "../types";
 
 export default function AdminServiceForm({
   closeServiceDialog,
+  serviceToEdit,
 }: {
   closeServiceDialog: () => void;
+  serviceToEdit: Service | {};
 }) {
-  const form = useForm<z.infer<typeof serviceSchema>>({
+  const { editService, isEditing } = useEditService();
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const { _id: editId, skill, ...otherValues } = serviceToEdit;
+
+  const form = useForm<TserviceSchema>({
     resolver: zodResolver(serviceSchema),
-    defaultValues: {
-      description: "",
-      roles: "",
-    },
+    defaultValues: otherValues || {},
   });
 
-  async function onSubmit(details: z.infer<typeof serviceSchema>) {
-    await new Promise((res) => setTimeout(res, 2000));
+  async function onSubmit(details: TserviceSchema) {
+    // await new Promise((res) => setTimeout(res, 2000));
 
-    const newDetails = { ...details, roles: details.roles.split(",") };
-
-    form.reset();
-    console.log(newDetails);
-
-    closeServiceDialog();
+    editService(
+      { data: details, id: editId },
+      {
+        onSuccess: () => {
+          form.reset();
+          closeServiceDialog();
+        },
+      },
+    );
   }
 
+  const isWorking = isEditing || form.formState.isSubmitting;
+
   return (
-    <div className="mt-4">
+    <div>
+      <h1 className="mb-4 text-xl text-gray-700">Edit Service</h1>
       <div className="mb-6">
         <label className="text-blue-gray-800 block text-left text-[1rem] font-semibold leading-6">
-          Description
+          Skill
         </label>
 
         <Input
           className="mt-2 resize-none bg-gray-200 text-gray-600 focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
           placeholder="Write about the project."
-          defaultValue={"ambassadorship-&-influence"
-            .split("-")
-            .join(" ")
-            .toUpperCase()}
+          defaultValue={skill?.split("-").join(" ").toUpperCase()}
           disabled={true}
         />
       </div>
@@ -73,7 +81,7 @@ export default function AdminServiceForm({
                     className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
                     placeholder="Write about the project."
                     {...field}
-                    disabled={form.formState.isSubmitting}
+                    disabled={isWorking}
                   />
                 </FormControl>
                 <FormMessage />
@@ -93,7 +101,7 @@ export default function AdminServiceForm({
                     className="resize-none focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
                     placeholder="one,two,three..."
                     {...field}
-                    disabled={form.formState.isSubmitting}
+                    disabled={isWorking}
                   />
                 </FormControl>
                 <FormMessage />
@@ -104,9 +112,9 @@ export default function AdminServiceForm({
             <Button
               type="submit"
               className="block w-32 bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
-              disabled={form.formState.isSubmitting}
+              disabled={isWorking}
             >
-              {form.formState.isSubmitting ? <SpinnerMini /> : "Edit Service"}
+              {isWorking ? <SpinnerMini /> : "Edit Service"}
             </Button>
           </div>
         </form>

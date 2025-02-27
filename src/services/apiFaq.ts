@@ -2,19 +2,19 @@ import { Faq } from "@/features/AdminFaqs/types";
 import api from "./api";
 import { TfaqSchema } from "@/schema/faqSchema";
 
-type FaqData = {
+type FaqsData = {
   message: string;
   faqs: Faq[];
 };
 
-type TestimonialData = {
+type FaqData = {
   message: string;
   faq: Faq;
 };
 
 export async function getFaqs() {
   try {
-    return (await api.get<FaqData>("/faqs")).data.faqs;
+    return (await api.get<FaqsData>("/faqs")).data.faqs;
   } catch (error: any) {
     console.error("Error:", error);
 
@@ -24,7 +24,7 @@ export async function getFaqs() {
 
 export async function getFaq(id: string) {
   try {
-    return (await api.get<TestimonialData>(`/faqs/${id}`)).data.faq;
+    return (await api.get<FaqData>(`/faqs/${id}`)).data.faq;
   } catch (error: any) {
     console.error("Error:", error);
 

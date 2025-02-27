@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { isTokenExpired } from "../services/authutils";
+// import { useNavigate } from "react-router-dom";
 
 type AuthContextType = {
   accessToken: string | null;
@@ -25,10 +26,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.getItem("userId"),
   );
 
+  // const navigate = useNavigate();
+
   useEffect(() => {
     // Check if token exists and is expired
     if (accessToken && isTokenExpired(accessToken)) {
       logout();
+      // console.log("hi");
+
+      // navigate("/login");
     }
   }, [accessToken]);
 

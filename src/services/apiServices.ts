@@ -1,9 +1,21 @@
 import api from "./api";
 
+import { TserviceSchema } from "@/schema/serviceSchema";
+
+import { Service } from "@/features/AdminServices/types";
+
+type ServicesData = {
+  services: Service[];
+  message: string;
+};
+type ServiceData = {
+  service: Service;
+  message: string;
+};
+
 export async function getServices() {
   try {
-    const { data } = await api.get("/services");
-    return data;
+    return (await api.get<ServicesData>("/services")).data.services;
   } catch (error: any) {
     console.error("Error:", error);
 
@@ -15,8 +27,7 @@ export async function getServices() {
 
 export async function getService(id: string) {
   try {
-    const { data } = await api.get(`services/${id}`);
-    return data;
+    return (await api.get<ServiceData>(`/services/${id}`)).data.service;
   } catch (error: any) {
     console.error("Error:", error);
 
@@ -24,13 +35,11 @@ export async function getService(id: string) {
   }
 }
 
-// export async function createItem(data) {
-//   try {
-//     // The interceptor adds the Authorization header automatically
-//     const response = await api.post('/services', {});
-//     return response.data;
-//   } catch (error: any) {
-//     console.error('Error creating item:', error);
-//     throw error;
-//   }
-// }
+export async function editService(data: TserviceSchema, id: string) {
+  try {
+    await api.put(`/services/${id}`, data);
+  } catch (error: any) {
+    console.error("Error updating service", error);
+    throw new Error(error.response?.data?.message || "Error updating service");
+  }
+}
