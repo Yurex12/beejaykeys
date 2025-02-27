@@ -14,32 +14,25 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { HiEllipsisVertical } from "react-icons/hi2";
-
-const links = [
-  {
-    name: "twitter",
-    url: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, id!",
-  },
-  {
-    name: "facebook",
-    url: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, id!",
-  },
-  {
-    name: "telegram",
-    url: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, id!",
-  },
-];
+import { useLinks } from "../hooks/useLinks";
+import { Link } from "../types";
 
 export default function AdminLinksTable({
-  openServiceDialog,
+  handleServiceEdit,
 }: {
-  openServiceDialog: () => void;
+  handleServiceEdit: (link: Link) => void;
 }) {
+  const { links, isLoading, error } = useLinks();
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (error) return <p>Error</p>;
+
+  if (!links?.length) return <p>No data found</p>;
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">
         <Table>
-          {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
           <TableHeader>
             <TableRow>
               <TableHead className="text-center">Name</TableHead>
@@ -49,7 +42,7 @@ export default function AdminLinksTable({
           </TableHeader>
           <TableBody>
             {links.map((link) => (
-              <TableRow key={link.name}>
+              <TableRow key={link._id}>
                 <TableCell className="whitespace-nowrap text-center text-xs">
                   {link.name}
                 </TableCell>
@@ -62,7 +55,7 @@ export default function AdminLinksTable({
                       <HiEllipsisVertical className="text-2xl" />
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
-                      <DropdownMenuItem onClick={openServiceDialog}>
+                      <DropdownMenuItem onClick={() => handleServiceEdit(link)}>
                         Edit
                       </DropdownMenuItem>
                     </DropdownMenuContent>

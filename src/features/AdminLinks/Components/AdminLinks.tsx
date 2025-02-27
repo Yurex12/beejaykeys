@@ -1,20 +1,37 @@
-import AdminContentHeader from "@/components/AdminContentHeader";
-import AdminLinksTable from "./AdminLinksTable";
-import CreateEditDialog from "@/components/CreateEditDialog";
-import AdminLinkForm from "./AdminLinkForm";
 import { useState } from "react";
-function AdminLinks() {
-  const [open, setOpen] = useState(false);
 
-  const openServiceDialog = () => setOpen(true);
-  const closeServiceDialog = () => setOpen(false);
+import AdminContentHeader from "@/components/AdminContentHeader";
+import CreateEditDialog from "@/components/CreateEditDialog";
+
+import AdminLinksTable from "./AdminLinksTable";
+import AdminLinkForm from "./AdminLinkForm";
+
+import { Link } from "../types";
+function AdminLinks() {
+  const [openForm, setOpenForm] = useState(false);
+  const [linkToEdit, setLinkToEdit] = useState<Link | {}>({});
+
+  const resetServiceToEdit = () => setLinkToEdit({});
+
+  function handleOpenChange(value: boolean) {
+    if (!value) resetServiceToEdit();
+    setOpenForm(value);
+  }
+
+  function handleServiceEdit(testimonial: Link) {
+    setLinkToEdit(testimonial);
+    handleOpenChange(true);
+  }
   return (
     <div className="flex flex-col md:h-screen">
       <AdminContentHeader title="Links" />
-      <CreateEditDialog onOpenChange={setOpen} open={open} title="Edit link">
-        <AdminLinkForm closeLinkDialog={closeServiceDialog} />
+      <CreateEditDialog onOpenChange={handleOpenChange} open={openForm}>
+        <AdminLinkForm
+          closeLinkDialog={() => handleOpenChange(false)}
+          linkToEdit={linkToEdit}
+        />
       </CreateEditDialog>
-      <AdminLinksTable openServiceDialog={openServiceDialog} />
+      <AdminLinksTable handleServiceEdit={handleServiceEdit} />
     </div>
   );
 }

@@ -1,11 +1,19 @@
+import { Link } from "@/features/AdminLinks/types";
+import { TlinkSchema } from "@/schema/linkSchema";
 import api from "./api";
 
-// const url = "http://localhost:8080/api/links";
+type LinksData = {
+  links: Link[];
+  message: string;
+};
+type LinkData = {
+  link: Link;
+  message: string;
+};
 
 export async function getLinks() {
   try {
-    const { data } = await api.get("/links");
-    return data;
+    return (await api.get<LinksData>("/links")).data.links;
   } catch (error: any) {
     console.error("Error:", error);
 
@@ -15,11 +23,19 @@ export async function getLinks() {
 
 export async function getLink(name: string) {
   try {
-    const { data } = await api.get(`/links/${name}`);
-    return data;
+    return (await api.get<LinkData>(`/links/${name}`)).data.link;
   } catch (error: any) {
     console.error("Error:", error);
 
     throw new Error(error.response?.data?.message || "Error fetching Link.");
+  }
+}
+
+export async function editLink(data: TlinkSchema, id: string) {
+  try {
+    await api.put(`/services/${id}`, data);
+  } catch (error: any) {
+    console.error("Error updating link", error);
+    throw new Error(error.response?.data?.message || "Error updating link");
   }
 }
