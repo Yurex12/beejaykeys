@@ -1,8 +1,16 @@
-import { projects } from "@/features/project/constants";
 import { FaCheckCircle, FaFolder, FaHourglassHalf } from "react-icons/fa";
 import AdminProjectStat from "./AdminProjectStat";
+import { useProjects } from "../hooks/useProjects";
 
 function AdminProjectStats() {
+  const { projects, error, isLoading } = useProjects();
+
+  if (isLoading) return <p>Loading....</p>;
+
+  if (error) return null;
+
+  if (!projects?.length) return null;
+
   return (
     <section>
       <div className="mx-auto mt-10 px-8 md:px-14">

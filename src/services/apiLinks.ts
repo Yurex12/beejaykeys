@@ -21,9 +21,9 @@ export async function getLinks() {
   }
 }
 
-export async function getLink(name: string) {
+export async function getLink(id: string) {
   try {
-    return (await api.get<LinkData>(`/links/${name}`)).data.link;
+    return (await api.get<LinkData>(`/links/${id}`)).data.link;
   } catch (error: any) {
     console.error("Error:", error);
 
