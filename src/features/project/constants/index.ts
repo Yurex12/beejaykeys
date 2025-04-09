@@ -1,4 +1,4 @@
-import { Project } from "../types";
+import { Project, ProjectName } from "../types";
 
 export const projects: Project[] = [
   {
@@ -6,7 +6,7 @@ export const projects: Project[] = [
     name: "Dogegrok",
     status: "done",
     imageUrl: "/dogegrok.jpg",
-    desc: "DogeGrok meme token aims to be one of the strongest meme coins in the market, it is being built even better and stronger than expected.",
+    desc: "DogeGrok meme token aims to be one of the strongest meme coins in the market, it is being built even better and stronger than expected.DogeGrok meme token aims to be one of the strongest meme coins in the market, it is being built even better and stronger than expected.",
     workedAs: ["Community Moderator", "Graphic designer", " Ambassador"],
     problem:
       "DogeGrok meme token aims to be one of the strongest meme coins in the market, it is being built even better and stronger than expected.",
@@ -50,4 +50,14 @@ export const projects: Project[] = [
     conclusion:
       "DogeGrok meme token aims to be one of the strongest meme coins in the market, it is being built even better and stronger than expected.",
   },
+];
+
+export const projectsName: ProjectName[] = [
+  { id: "all-works", title: "All works" },
+  { id: "project-ambassador", title: "Project Ambassador" },
+  { id: "brand-ambassador", title: "Brand Ambassador" },
+  { id: "project-marketer", title: "Project Marketer" },
+  { id: "community-moderator", title: "Community moderator" },
+  { id: "raider", title: "Raider" },
+  { id: "shiller", title: "Shiller" },
 ];

@@ -8,7 +8,7 @@ export default function AdminHeader() {
   const { toggleSidebar } = useSidebar();
   return (
     <header className="fixed top-0 z-50 mx-auto flex w-full items-center justify-between bg-white shadow-sm">
-      <div className="mx-auto flex flex-1 items-center justify-between px-10 py-5">
+      <div className="mx-auto flex flex-1 items-center justify-between px-4 py-5 md:px-10">
         <div className="flex items-center gap-x-5">
           <button onClick={toggleSidebar}>
             <HiMenu className="text-3xl" />

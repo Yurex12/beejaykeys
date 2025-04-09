@@ -1,29 +1,12 @@
-import { FaTelegramPlane, FaInstagramSquare } from "react-icons/fa";
-import { TbBrandX } from "react-icons/tb";
-
-import { footerLinks } from "../constants";
 import Logo from "./Logo";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { getLinks, getLink } from "@/services/apiLinks";
+
+import SocialLinks from "./SocialLinks";
+import { footerLinks } from "../constants";
 
 function Footer() {
-  useEffect(() => {
-    async function fetctData() {
-      try {
-        const res = await getLink("telegram");
-        console.log(res);
-        alert(res.message);
-      } catch (error) {
-        alert(error);
-      }
-    }
-
-    fetctData();
-  }, []);
   return (
     <footer className="mt-10 bg-gray-50 shadow-sm">
-      <div className="mx-auto max-w-[1440px] px-10">
+      <div className="mx-auto max-w-[1440px] px-6">
         <div className="grid grid-cols-1 gap-y-5 py-5 text-gray-500 sm:grid-cols-[2fr_1fr] sm:pl-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-x-4">
           {/* text & logo */}
           <div className="space-y-4 p-1">
@@ -32,26 +15,7 @@ function Footer() {
               Designing tomorrow’s digital landscape through the transformative
               power of Web3.
             </p>
-            <div className="flex space-x-4">
-              {/* Telegram Icon */}
-              <Link to="/">
-                <TbBrandX className="h-6 w-6 text-gray-700" title="X" />
-              </Link>
-              {/* X (Twitter) Icon */}
-              <Link to="/">
-                <FaTelegramPlane
-                  className="h-6 w-6 text-gray-700"
-                  title="Telegram"
-                />
-              </Link>
-              {/* X (instagram) Icon */}
-              <Link to="/">
-                <FaInstagramSquare
-                  className="h-6 w-6 text-gray-700"
-                  title="instagram"
-                />
-              </Link>
-            </div>
+            <SocialLinks />
           </div>
 
           {/* links */}

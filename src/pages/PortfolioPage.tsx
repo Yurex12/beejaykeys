@@ -1,13 +1,7 @@
-import ProjectFilter from "@/features/portfolio/components/ProjectFilter";
-import ProjectsContainer from "@/features/portfolio/components/ProjectsContainer";
+import Portfolio from "@/features/portfolio/components/Portfolio";
 
 function PortfolioPage() {
-  return (
-    <>
-      <ProjectFilter />
-      <ProjectsContainer />
-    </>
-  );
+  return <Portfolio />;
 }
 
 export default PortfolioPage;

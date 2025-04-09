@@ -1,11 +1,11 @@
 import ContactForm from "@/features/contact/components/ContactForm";
-import Faq from "@/features/contact/components/Faq";
+import Faqs from "@/features/contact/components/Faqs";
 
 function ContactPage() {
   return (
     <>
       <ContactForm />
-      <Faq />
+      <Faqs />
     </>
   );
 }

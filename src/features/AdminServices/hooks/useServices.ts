@@ -6,10 +6,11 @@ export function useServices() {
     data: services,
     isLoading,
     error,
+    refetch: refetchServices,
   } = useQuery({
     queryKey: ["services"],
     queryFn: getServices,
   });
 
-  return { services, isLoading, error };
+  return { services, isLoading, refetchServices, error };
 }

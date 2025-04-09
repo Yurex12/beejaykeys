@@ -1,7 +1,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
+import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -12,36 +12,24 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { login as loginApi } from "@/services/apiAuth";
-import SpinnerMini from "@/components/SpinnerMini";
-import { useAuth } from "@/contexts/authContext";
-
-const formSchema = z.object({
-  email: z.string().email({ message: "Please enter a correct Email" }),
-  password: z.string().min(6, { message: "Enter at least 6 characters." }),
-});
+import { loginSchema, TLoginSchema } from "@/schema/userSchema";
+import { useLogin } from "./hooks/useLogin";
 
 export default function LoginForm() {
-  const { login } = useAuth();
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { login, isLoading } = useLogin();
+
+  const form = useForm<TLoginSchema>({
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      password: "",
-      email: "",
+      email: "beejaykeys@gmail.com",
+      password: "123456",
     },
   });
 
-  async function onSubmit(details: z.infer<typeof formSchema>) {
-    try {
-      const data = await loginApi(details);
-      login(data.accessToken, data.userId);
-
-      alert(data.message);
-    } catch (error) {
-      alert(error);
-    }
-
-    form.reset();
+  async function onSubmit(details: TLoginSchema) {
+    login(details, {
+      onSuccess: () => form.reset(),
+    });
   }
 
   return (
@@ -97,9 +85,9 @@ export default function LoginForm() {
           <Button
             type="submit"
             className="block w-full bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
-            disabled={form.formState.isSubmitting}
+            disabled={isLoading}
           >
-            {form.formState.isSubmitting ? <SpinnerMini /> : "Login"}
+            {isLoading ? <SpinnerMini /> : "Login"}
           </Button>
         </form>
       </Form>

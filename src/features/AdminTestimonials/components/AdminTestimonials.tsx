@@ -7,12 +7,16 @@ import AdminTestimonialForm from "./AdminTestimonialForm";
 import AdminTestimonialTable from "./AdminTestimonialTable";
 
 import { Testimonial } from "../types";
+import Spinner from "@/components/Spinner";
+import { useTestimonials } from "../hooks/useTestimonials";
+import ErrorPage from "@/components/ErrorPage";
 
 function AdminTestimonials() {
   const [openForm, setOpenForm] = useState(false);
   const [testimonailToEdit, setTestimonialToEdit] = useState<Testimonial | {}>(
     {},
   );
+  const { isLoading, error, refetchTestimonials } = useTestimonials();
 
   const resetTestimonialToEdit = () => setTestimonialToEdit({});
 
@@ -25,6 +29,10 @@ function AdminTestimonials() {
     setTestimonialToEdit(testimonial);
     handleOpenChange(true);
   }
+
+  if (isLoading) return <Spinner />;
+
+  if (error) return <ErrorPage onRetry={refetchTestimonials} />;
 
   return (
     <div className="flex flex-col md:h-screen">

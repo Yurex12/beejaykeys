@@ -1,9 +1,5 @@
-function OverviewPage() {
-  return (
-    <div className="mt-20 text-xl">
-      <h1>Welcome back Amdin Beejaykeys</h1>
-    </div>
-  );
-}
+import Overview from "@/features/Overview/components/Overview";
 
-export default OverviewPage;
+export default function OverviewPage() {
+  return <Overview />;
+}

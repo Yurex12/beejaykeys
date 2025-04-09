@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import LinkButton from "@/components/LinkButton";
 
 function Hero() {
   return (
@@ -15,9 +15,7 @@ function Hero() {
             Transform your Web3 project into a market leader with impactful,
             results-driven solutions.
           </p>
-          <Button className="mx-auto block rounded-lg bg-green-600 px-6 text-sm text-white hover:bg-green-700">
-            Let’s Collaborate
-          </Button>
+          <LinkButton name="Let's Collaborate" to="/contact-me" />
         </div>
       </div>
     </section>

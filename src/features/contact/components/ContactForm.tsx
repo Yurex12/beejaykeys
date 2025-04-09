@@ -1,4 +1,3 @@
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -16,18 +15,14 @@ import { Textarea } from "@/components/ui/textarea";
 
 import contactMe from "@/assets/contact-4.png";
 
-const formSchema = z.object({
-  name: z.string().min(1, { message: "Please enter your name." }),
-  email: z.string().email({ message: "Please enter a correct Email." }),
-  message: z
-    .string()
-    .min(10, { message: "Message must be at least 10 characters." }),
-});
+import SpinnerMini from "@/components/SpinnerMini";
+import { useCreateMessage } from "@/features/messages/hooks/useCreateMessage";
+import { messageSchema, TmessageSchema } from "@/schema/message";
 
 function ContactForm() {
-  // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const { createMessage, isDeleting } = useCreateMessage();
+  const form = useForm<TmessageSchema>({
+    resolver: zodResolver(messageSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -35,11 +30,8 @@ function ContactForm() {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  function onSubmit(data: TmessageSchema) {
+    createMessage(data);
     form.reset();
   }
   return (
@@ -68,6 +60,7 @@ function ContactForm() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          disabled={isDeleting}
                           placeholder="Jane Smith"
                           {...field}
                           className="focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
@@ -87,6 +80,7 @@ function ContactForm() {
                       </FormLabel>
                       <FormControl>
                         <Input
+                          disabled={isDeleting}
                           className="focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
                           placeholder="name@gmail.com"
                           {...field}
@@ -106,6 +100,7 @@ function ContactForm() {
                       </FormLabel>
                       <FormControl>
                         <Textarea
+                          disabled={isDeleting}
                           placeholder="Your message"
                           className="resize-none focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
                           {...field}
@@ -115,11 +110,13 @@ function ContactForm() {
                     </FormItem>
                   )}
                 />
+
                 <Button
                   type="submit"
-                  className="block w-full bg-green-600 text-white hover:bg-green-700"
+                  className="w-full bg-green-500 text-white hover:bg-green-600 disabled:cursor-not-allowed"
+                  disabled={isDeleting}
                 >
-                  Submit
+                  {isDeleting ? <SpinnerMini /> : <span>Send Message</span>}
                 </Button>
               </form>
             </Form>

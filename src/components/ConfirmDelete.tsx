@@ -26,15 +26,17 @@ export function ConfirmDelete({
 }: ConfirmDeleteProps) {
   return (
     <AlertDialog key={resourceName} open={open} onOpenChange={handleOpen}>
-      <AlertDialogContent>
+      <AlertDialogContent className="w-11/12 rounded-md sm:w-auto">
         <AlertDialogHeader>
-          <AlertDialogTitle>Delete {resourceName}</AlertDialogTitle>
-          <AlertDialogDescription>
+          <AlertDialogTitle className="text-left">
+            Delete {resourceName}
+          </AlertDialogTitle>
+          <AlertDialogDescription className="text-left">
             Are you sure you want to delete this {resourceName} permanently?
             This action cannot be undone.
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="flex flex-row justify-end gap-x-4">
           <Button
             onClick={() => handleOpen(false)}
             className="focus:outline-none focus:ring-0 active:outline-none active:ring-0"

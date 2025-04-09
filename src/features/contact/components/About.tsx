@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import LinkButton from "@/components/LinkButton";
 
 function About() {
   return (
@@ -43,9 +42,12 @@ function About() {
               ambassador for your Web3 project, I’d love to help bring your
               vision to life.
             </p>
-            <Button className="bg-green-500 hover:bg-green-600">
-              <Link to="/contact-me"> Let’s Collaborate</Link>
-            </Button>
+
+            <LinkButton
+              name="Let's Collaborate"
+              to="/contact-me"
+              className="mx-0"
+            />
           </div>
         </div>
       </div>

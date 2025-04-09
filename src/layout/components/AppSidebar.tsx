@@ -1,14 +1,18 @@
+import { ForwardRefExoticComponent, Fragment, RefAttributes } from "react";
+import { Link, NavLink } from "react-router-dom";
 import {
   ChartNoAxesCombined,
   ChevronRight,
   Home,
   LucideProps,
   MessageCircleMoreIcon,
+  UserIcon,
 } from "lucide-react";
 
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarMenu,
@@ -17,14 +21,17 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
 } from "@radix-ui/react-collapsible";
-import { ForwardRefExoticComponent, RefAttributes } from "react";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useLogout } from "@/features/auth/hooks/useLogout";
+import { HiLogout } from "react-icons/hi";
+import { MOBILE_BREAKPOINT } from "@/hooks/use-mobile";
 
 type Items = {
   title: string;
@@ -81,9 +88,17 @@ const items: Item[] = [
     url: "dashboard/messages",
     icon: MessageCircleMoreIcon,
   },
+  {
+    title: "Users",
+    url: "dashboard/user",
+    icon: UserIcon,
+  },
 ];
 
 export function AppSidebar() {
+  const { logout, isLoggingOut } = useLogout();
+  const { toggleSidebar } = useSidebar();
+
   return (
     <Sidebar>
       <SidebarContent className="md:mt-20 md:px-4">
@@ -91,7 +106,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu className="text-2xl">
               {items.map((item) => (
-                <>
+                <Fragment key={item.title}>
                   {item?.links ? (
                     <>
                       <Collapsible
@@ -113,9 +128,16 @@ export function AppSidebar() {
                               {item.links.map((subItem) => (
                                 <SidebarMenuSubItem key={subItem.title}>
                                   <SidebarMenuSubButton asChild>
-                                    <Link to={subItem.url}>
+                                    <NavLink
+                                      to={subItem.url}
+                                      onClick={
+                                        MOBILE_BREAKPOINT > window.innerWidth
+                                          ? toggleSidebar
+                                          : () => {}
+                                      }
+                                    >
                                       <span>{subItem.title}</span>
-                                    </Link>
+                                    </NavLink>
                                   </SidebarMenuSubButton>
                                 </SidebarMenuSubItem>
                               ))}
@@ -127,19 +149,36 @@ export function AppSidebar() {
                   ) : (
                     <SidebarMenuItem>
                       <SidebarMenuButton asChild>
-                        <Link to={`/${item.url}`}>
+                        <NavLink
+                          to={`/${item.url}`}
+                          onClick={
+                            MOBILE_BREAKPOINT > window.innerWidth
+                              ? toggleSidebar
+                              : () => {}
+                          }
+                        >
                           <item.icon />
                           <span>{item.title}</span>
-                        </Link>
+                        </NavLink>
                       </SidebarMenuButton>
                     </SidebarMenuItem>
                   )}
-                </>
+                </Fragment>
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter className="mb-20">
+        <Button
+          className="mx-auto w-40 border border-green-500 bg-transparent text-base text-green-500 hover:bg-transparent"
+          onClick={() => logout()}
+          disabled={isLoggingOut}
+        >
+          Logout
+          <HiLogout />
+        </Button>
+      </SidebarFooter>
     </Sidebar>
   );
 }

@@ -4,15 +4,12 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { TestimonialSkeleton } from "./TestimonialSkeleton";
 
 function Testimonials() {
   const { testimonials, error, isLoading } = useTestimonials();
 
-  if (isLoading) return <p>Loading...</p>;
-
-  if (error) return <p>Error</p>;
-
-  if (!testimonials?.length) return <p>No data found</p>;
+  if (error) return null;
 
   return (
     <section>
@@ -42,26 +39,32 @@ function Testimonials() {
             },
           }}
         >
-          {testimonials.map((testimonial) => (
-            <SwiperSlide
-              key={testimonial._id}
-              className="swiper-slide h-auto space-y-4 rounded-md border border-gray-200 p-5"
-            >
-              {/* heading */}
-              <div className="flex items-center gap-x-4">
-                <span
-                  className={`rounded-full px-4 py-2 text-white ${testimonial.color === "red" && "bg-red-700"} ${testimonial.color === "gray" && "bg-gray-700"} ${testimonial.color === "yellow" && "bg-yellow-700"}`}
+          {!isLoading
+            ? testimonials?.map((testimonial) => (
+                <SwiperSlide
+                  key={testimonial._id}
+                  className="swiper-slide h-auto space-y-4 rounded-md border border-gray-200 p-5"
                 >
-                  {testimonial.name.charAt(0)}
-                </span>
-                <p className="text-md font-extrabold text-gray-800">
-                  {testimonial.name}
-                </p>
-              </div>
-              {/* content */}
-              <p className="text-xs md:text-sm">{testimonial.review}</p>
-            </SwiperSlide>
-          ))}
+                  {/* heading */}
+                  <div className="flex items-center gap-x-4">
+                    <span
+                      className={`rounded-full px-4 py-2 text-white ${testimonial.color === "red" && "bg-red-700"} ${testimonial.color === "gray" && "bg-gray-700"} ${testimonial.color === "yellow" && "bg-yellow-700"}`}
+                    >
+                      {testimonial.name.charAt(0)}
+                    </span>
+                    <p className="text-md font-extrabold text-gray-800">
+                      {testimonial.name}
+                    </p>
+                  </div>
+                  {/* content */}
+                  <p className="text-xs md:text-sm">{testimonial.review}</p>
+                </SwiperSlide>
+              ))
+            : [1, 2, 3].map((_, i) => (
+                <SwiperSlide className="swiper-slide h-auto space-y-4 rounded-md border border-gray-200 p-5">
+                  <TestimonialSkeleton key={i} />
+                </SwiperSlide>
+              ))}
         </Swiper>
 
         {/* Custom pagination container below the slider */}

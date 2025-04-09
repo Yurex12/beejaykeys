@@ -32,8 +32,10 @@ export async function getLink(id: string) {
 }
 
 export async function editLink(data: TlinkSchema, id: string) {
+  console.log(data, id);
+
   try {
-    await api.put(`/services/${id}`, data);
+    await api.put(`/links/${id}`, data);
   } catch (error: any) {
     console.error("Error updating link", error);
     throw new Error(error.response?.data?.message || "Error updating link");

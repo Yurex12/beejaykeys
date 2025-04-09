@@ -11,7 +11,9 @@ import AdminFaqsPage from "./AdminFaqsPage.tsx";
 import AdminLinkPage from "./AdminLinkPage.tsx";
 import AdminTestimonialsPage from "./AdminTestimonialsPage.tsx";
 import AdminServicesPage from "./AdminServicesPage.tsx";
-import MessagesPage from "./MessagesPage.tsx";
+import AdminMessagesPage from "./AdminMessagesPage.tsx";
+import AdminProjectDetailsPage from "./AdminProjectDetailsPage.tsx";
+import UserSettingsPage from "./UserSettingsPage.tsx";
 
 export {
   HomePage,
@@ -26,5 +28,7 @@ export {
   AdminLinkPage,
   AdminTestimonialsPage,
   AdminServicesPage,
-  MessagesPage,
+  AdminMessagesPage,
+  AdminProjectDetailsPage,
+  UserSettingsPage,
 };

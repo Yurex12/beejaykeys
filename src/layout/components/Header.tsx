@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { HiMenu } from "react-icons/hi";
+import AdminButton from "./AdminButton";
 import Logo from "./Logo";
-import MenuBar from "./MenuBar";
 import MobileNav from "./MobileNav";
 import NavBar from "./NavBar";
 
@@ -20,7 +21,8 @@ function Header() {
           isSheetOpen={isSheetOpen}
           handleCloseSheet={handleCloseSheet}
         />
-        <MenuBar handleOpenSheet={handleOpenSheet} />
+        <AdminButton />
+        <HiMenu className="text-gray-600 lg:hidden" onClick={handleOpenSheet} />
       </div>
     </header>
   );

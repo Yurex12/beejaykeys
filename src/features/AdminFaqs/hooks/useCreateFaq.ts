@@ -2,7 +2,6 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 
 import { createFaq as createFaqApi } from "@/services/apiFaq";
-import { TfaqSchema } from "@/schema/faqSchema";
 
 export function useCreateFaq() {
   const queryClient = useQueryClient();
@@ -12,7 +11,7 @@ export function useCreateFaq() {
     isPending: isDeleting,
     error,
   } = useMutation({
-    mutationFn: (data: TfaqSchema) => createFaqApi(data),
+    mutationFn: createFaqApi,
     onSuccess: () => {
       toast.success("New Faq successfully created.");
       queryClient.invalidateQueries({

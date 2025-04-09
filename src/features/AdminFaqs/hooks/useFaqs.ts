@@ -6,10 +6,11 @@ export function useFaqs() {
     data: faqs,
     isLoading,
     error,
+    refetch: refetchFaqs,
   } = useQuery({
     queryKey: ["faqs"],
     queryFn: getFaqs,
   });
 
-  return { faqs, isLoading, error };
+  return { faqs, isLoading, refetchFaqs, error };
 }

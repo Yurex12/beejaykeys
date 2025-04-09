@@ -22,13 +22,14 @@ import { useFaqs } from "../hooks/useFaqs";
 import { useDeleteFaq } from "../hooks/useDeleteFaq";
 
 import { Faq } from "../types";
+import NoData from "@/components/NoData";
 
 export default function AdminFaqsTable({
   handleFaqEdit,
 }: {
   handleFaqEdit: (testimonial: Faq) => void;
 }) {
-  const { faqs, isLoading, error } = useFaqs();
+  const { faqs } = useFaqs();
   const { deleteFaq, isDeleting } = useDeleteFaq();
   const [open, setOpen] = useState(false);
   const [faqId, setFaqId] = useState("");
@@ -38,11 +39,8 @@ export default function AdminFaqsTable({
     setFaqId(id);
   }
 
-  if (isLoading) return <p>Loading....</p>;
+  if (!faqs?.length) return <NoData />;
 
-  if (error) return <p>Error</p>;
-
-  if (!faqs?.length) return <p>No data found</p>;
   return (
     <>
       <section className="mt-10 md:overflow-scroll">

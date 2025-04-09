@@ -17,6 +17,7 @@ import { HiEllipsisVertical } from "react-icons/hi2";
 // import { services } from "@/features/homepage/constants";
 import { Service } from "../types";
 import { useServices } from "../hooks/useServices";
+import NoData from "@/components/NoData";
 
 export default function AdminServiceTable({
   handleServiceEdit,
@@ -25,11 +26,11 @@ export default function AdminServiceTable({
 }) {
   const { services, isLoading, error } = useServices();
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return null;
 
-  if (error) return <p>Error</p>;
+  if (error) return null;
 
-  if (!services?.length) return <p>No data found</p>;
+  if (!services?.length) return <NoData />;
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">

@@ -19,12 +19,12 @@ import {
 import { HiEllipsisVertical } from "react-icons/hi2";
 
 import { ConfirmDelete } from "@/components/ConfirmDelete";
-import NoData from "@/components/NoData";
 
 import { useDeleteTestimonial } from "../hooks/useDeleteTestimonial";
 import { useTestimonials } from "../hooks/useTestimonials";
 
 import { Testimonial } from "../types";
+import NoData from "@/components/NoData";
 
 export default function AdminTestimonialTable({
   handleTestimonialEdit,
@@ -42,9 +42,9 @@ export default function AdminTestimonialTable({
     setTestimonialId(id);
   }
 
-  if (isLoading) return <p>Loading</p>;
+  if (isLoading) return null;
 
-  if (error) return <p>Error</p>;
+  if (error) return null;
 
   if (!testimonials?.length) return <NoData />;
 

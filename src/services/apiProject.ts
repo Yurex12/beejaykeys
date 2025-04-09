@@ -35,9 +35,16 @@ export async function getProject(id: string) {
 }
 
 export async function createProject(data: TprojectSchema) {
-  // await new Promise((res) => setTimeout(res, 3000));
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("description", data.description);
+  formData.append("workedAs", JSON.stringify(data.workedAs));
+  formData.append("status", data.status);
+  formData.append("pitch", data.pitch);
+  formData.append("image", data.image);
+
   try {
-    await api.post("/projects", data);
+    await api.post("/projects", formData);
   } catch (error: any) {
     console.error("Error creating Project:", error);
     throw new Error(error.response?.data?.message || "Error creating Project.");
@@ -45,8 +52,22 @@ export async function createProject(data: TprojectSchema) {
 }
 
 export async function editProject(data: TprojectSchema, id: string) {
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("description", data.description);
+  formData.append("workedAs", JSON.stringify(data.workedAs));
+  formData.append("status", data.status);
+  formData.append("pitch", data.pitch);
+
+  if (typeof data.image !== "string") {
+    formData.append("image", data.image);
+  }
+
+  console.log("Image Type:", typeof data.image); // Should be "object"
+  console.log("Image Instance:", data.image instanceof File);
+
   try {
-    await api.put(`/projects/${id}`, data);
+    await api.put(`/projects/${id}`, formData);
   } catch (error: any) {
     console.error("Error editing Project:", error);
     throw new Error(error.response?.data?.message || "Error editing Project.");
@@ -60,5 +81,15 @@ export async function deleteProject(id: string) {
   } catch (error: any) {
     console.error("Error deleting Projects:", error);
     throw new Error(error.response?.data?.message || "Error deleting Project.");
+  }
+}
+
+export async function incrementProjectViews(projectId: string) {
+  try {
+    return (
+      await api.patch<ProjectData>(`/projects/increment-views/${projectId}`)
+    ).data.project;
+  } catch (error) {
+    console.error("Failed to increment view count:", error);
   }
 }

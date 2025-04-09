@@ -3,13 +3,17 @@ import { useState } from "react";
 import AdminContentHeader from "@/components/AdminContentHeader";
 import CreateEditDialog from "@/components/CreateEditDialog";
 
-import AdminLinksTable from "./AdminLinksTable";
 import AdminLinkForm from "./AdminLinkForm";
+import AdminLinksTable from "./AdminLinksTable";
 
+import ErrorPage from "@/components/ErrorPage";
+import Spinner from "@/components/Spinner";
+import { useLinks } from "../hooks/useLinks";
 import { Link } from "../types";
 function AdminLinks() {
   const [openForm, setOpenForm] = useState(false);
   const [linkToEdit, setLinkToEdit] = useState<Link | {}>({});
+  const { isLoading, error, refetchLinks } = useLinks();
 
   const resetServiceToEdit = () => setLinkToEdit({});
 
@@ -22,6 +26,10 @@ function AdminLinks() {
     setLinkToEdit(testimonial);
     handleOpenChange(true);
   }
+
+  if (isLoading) return <Spinner />;
+
+  if (error) return <ErrorPage onRetry={refetchLinks} />;
   return (
     <div className="flex flex-col md:h-screen">
       <AdminContentHeader title="Links" />

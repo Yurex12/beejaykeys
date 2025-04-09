@@ -16,6 +16,7 @@ import {
 import { HiEllipsisVertical } from "react-icons/hi2";
 import { useLinks } from "../hooks/useLinks";
 import { Link } from "../types";
+import NoData from "@/components/NoData";
 
 export default function AdminLinksTable({
   handleServiceEdit,
@@ -24,11 +25,11 @@ export default function AdminLinksTable({
 }) {
   const { links, isLoading, error } = useLinks();
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return null;
 
-  if (error) return <p>Error</p>;
+  if (error) return null;
 
-  if (!links?.length) return <p>No data found</p>;
+  if (!links?.length) return <NoData />;
   return (
     <section className="mt-10 md:overflow-scroll">
       <div className="px-6 md:px-14">

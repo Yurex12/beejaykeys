@@ -6,10 +6,15 @@ import CreateEditDialog from "@/components/CreateEditDialog";
 import AdminServiceForm from "./AdminServiceForm";
 
 import { Service } from "../types";
+import Spinner from "@/components/Spinner";
+import { useServices } from "../hooks/useServices";
+import ErrorPage from "@/components/ErrorPage";
 
 function AdminService() {
   const [openForm, setOpenForm] = useState(false);
   const [serviceToEdit, setServiceToEdit] = useState<Service | {}>({});
+
+  const { isLoading, refetchServices, error } = useServices();
 
   const resetServiceToEdit = () => setServiceToEdit({});
 
@@ -22,6 +27,10 @@ function AdminService() {
     setServiceToEdit(testimonial);
     handleOpenChange(true);
   }
+
+  if (isLoading) return <Spinner />;
+
+  if (error) return <ErrorPage onRetry={refetchServices} />;
   return (
     <>
       <AdminContentHeader title="Services" />

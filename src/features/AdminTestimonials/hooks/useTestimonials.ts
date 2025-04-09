@@ -6,10 +6,11 @@ export function useTestimonials() {
     data: testimonials,
     isLoading,
     error,
+    refetch: refetchTestimonials,
   } = useQuery({
     queryKey: ["testimonials"],
     queryFn: getTestimonials,
   });
 
-  return { testimonials, isLoading, error };
+  return { testimonials, isLoading, refetchTestimonials, error };
 }

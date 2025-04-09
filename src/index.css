@@ -25,7 +25,7 @@
   }
 
   body {
-    @apply font-manrope font-medium text-gray-600;
+    @apply break-words font-manrope font-medium text-gray-600;
   }
   .dark {
     --sidebar-background: 240 5.9% 10%;
@@ -60,11 +60,56 @@
   .swiper-pagination-bullet-active {
     background-color: var(--brandGreen);
   }
+
+  /* Container for all tags */
+  .tagsClass {
+    @apply flex flex-wrap gap-2 rounded-lg border border-gray-300 bg-white p-3 shadow-sm;
+  }
+
+  /* Container for the tag input */
+  .tagInputClass {
+    @apply w-full;
+  }
+
+  /* Input field styling */
+  .tagInputFieldClass {
+    @apply w-full bg-transparent p-2 text-sm text-gray-700 outline-none;
+  }
+
+  /* Container for selected tags */
+  .selectedClass {
+    @apply flex flex-wrap gap-2;
+  }
+
+  /* Individual tag style */
+  .tagClass {
+    @apply flex items-center gap-2 rounded-full bg-blue-600 px-3 py-1 text-white;
+  }
+
+  /* Remove icon style */
+  .removeClass {
+    @apply ml-2 cursor-pointer text-white hover:text-gray-300;
+  }
+
+  /* Suggestions dropdown container */
+  .suggestionsClass {
+    @apply absolute z-10 mt-2 w-full rounded-md border border-gray-300 bg-white shadow-md;
+  }
+
+  /* Active suggestion styling */
+  .activeSuggestionClass {
+    @apply cursor-pointer bg-gray-200 p-2;
+  }
+
+  /* Clear all tags button */
+  .clearAllClass {
+    @apply mt-4 cursor-pointer text-sm text-red-500;
+  }
 }
 
 /* On hover, restore the width to display the scrollbar */
 #project-table::-webkit-scrollbar {
-  @apply size-2;
+  @apply size-1;
 }
 
 /* Optional: style the track and thumb when visible */
@@ -80,3 +125,92 @@
 #project-table::-webkit-scrollbar:horizontal {
   height: 0;
 }
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: 40px;
+  --b: 5px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 1px;
+  background: conic-gradient(#0000 10%, #22c55e) content-box;
+  -webkit-mask: repeating-conic-gradient(
+      #0000 0deg,
+      #000 1deg 20deg,
+      #0000 21deg 36deg
+    ),
+    radial-gradient(
+      farthest-side,
+      #0000 calc(100% - var(--b) - 1px),
+      #000 calc(100% - var(--b))
+    );
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l4 1s infinite steps(10);
+}
+@keyframes l4 {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 142 86% 28%;
+    --primary-foreground: 356 29% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 45%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 142 86% 28%;
+    --chart-1: 139 65% 20%;
+    --chart-2: 140 74% 44%;
+    --chart-3: 142 88% 28%;
+    --chart-4: 137 55% 15%;
+    --chart-5: 141 40% 9%;
+  }
+
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 86% 28%;
+    --primary-foreground: 356 29% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 142 86% 28%;
+    --chart-1: 142 88% 28%;
+    --chart-2: 139 65% 20%;
+    --chart-3: 140 74% 24%;
+    --chart-4: 137 55% 15%;
+    --chart-5: 141 40% 9%;
+  }
+}
+
+/* .active {
+  color: red;
+} */

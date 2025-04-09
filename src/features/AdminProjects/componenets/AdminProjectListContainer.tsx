@@ -15,42 +15,90 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { HiEllipsisVertical } from "react-icons/hi2";
 
-import { useState } from "react";
-import { Project } from "../types";
 import { ConfirmDelete } from "@/components/ConfirmDelete";
-import { useProjects } from "../hooks/useProjects";
+import { useState } from "react";
 import { useDeleteProject } from "../hooks/useDeleteProject";
+import { useProjects } from "../hooks/useProjects";
+import { Project } from "../types";
 
-export function AdminProjectTable({
+import NoData from "@/components/NoData";
+import { HiArchive } from "react-icons/hi";
+import { useSearchParams } from "react-router-dom";
+
+export default function AdminProjectListContainer({
   handleProjectToEdit,
 }: {
   handleProjectToEdit: (project: Project) => void;
 }) {
-  const { projects, isLoading, error } = useProjects();
+  const { projects, isLoading } = useProjects();
   const { deleteProject, isDeleting } = useDeleteProject();
   const [open, setOpen] = useState(false);
   const [projectId, setProjectId] = useState("");
+
+  const [searchParams] = useSearchParams();
 
   function handleDelete(id: string) {
     setOpen(true);
     setProjectId(id);
   }
 
-  if (isLoading) return <p>Loading....</p>;
+  if (isLoading) return null;
 
-  if (error) return <p>Error</p>;
+  if (!projects?.length) return <NoData />;
 
-  if (!projects?.length) return <p>No data found</p>;
+  const filterValue = searchParams.get("status") || "all";
+  const sortByValue = searchParams.get("sortBy") || "updatedAt";
+
+  let filteredProject: Project[] | [];
+
+  if (filterValue === "all") filteredProject = projects;
+
+  if (filterValue === "in-progress")
+    filteredProject = projects.filter(
+      (project) => project.status === "in-progress",
+    );
+
+  if (filterValue === "done")
+    filteredProject = projects.filter((project) => project.status === "done");
+
+  if (!filteredProject!?.length)
+    return (
+      <div className="flex h-screen flex-col items-center justify-center gap-y-2">
+        <HiArchive className="text-3xl" />
+        <h1 className="text-xl">Nothing to display</h1>
+      </div>
+    );
+
+  let sortedProject;
+
+  if (sortByValue === "createdAt")
+    sortedProject = filteredProject!.sort(
+      (a, b) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    );
+
+  if (sortByValue === "name") {
+    sortedProject = filteredProject!
+      .slice()
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (sortByValue === "updatedAt") {
+    sortedProject = filteredProject!.sort(
+      (a, b) =>
+        new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
+    );
+  }
+
   return (
     <>
-      <section className="mt-14 md:mt-10 md:overflow-scroll" id="project-table">
+      <section className="mt-5 md:mt-10 md:overflow-scroll" id="project-table">
         <div className="px-6 md:px-14">
           <Table>
-            {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
             <TableHeader>
               <TableRow>
                 <TableHead>Name</TableHead>
-                <TableHead>ImageUrl</TableHead>
+                <TableHead>Image</TableHead>
                 <TableHead>Description</TableHead>
                 <TableHead className="whitespace-nowrap">Worked As</TableHead>
                 <TableHead>Status</TableHead>
@@ -59,19 +107,19 @@ export function AdminProjectTable({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {projects.map((project) => (
+              {sortedProject!.map((project) => (
                 <TableRow key={project._id}>
                   <TableCell className="text-xs">{project.name}</TableCell>
                   <TableCell className="text-xs">
-                    <img src={project.imageUrl} className="w-10" />
+                    <img src={project.image} className="w-10" />
                   </TableCell>
                   <TableCell className="text-xs">
                     {project.description}
                   </TableCell>
                   <TableCell className="text-xs">
                     <ul>
-                      {project.workedAs.split(",").map((work) => (
-                        <li key={work}>{work},</li>
+                      {project.workedAs.map((work) => (
+                        <li key={work.id}>{work.name},</li>
                       ))}
                     </ul>
                   </TableCell>

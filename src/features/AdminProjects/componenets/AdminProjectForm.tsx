@@ -14,9 +14,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { projectSchema, TprojectSchema } from "@/schema/projectSchema";
-import { Project } from "../types";
-import { useEditProject } from "../hooks/useEditProject";
 import { useCreateProject } from "../hooks/useCreateProject";
+import { useEditProject } from "../hooks/useEditProject";
+import { Project } from "../types";
+
+import ReactTag from "@/components/ReactTag";
+import MarkdownIt from "markdown-it";
+import MdEditor from "react-markdown-editor-lite";
+import "react-markdown-editor-lite/lib/index.css";
+
+const mdParser = new MarkdownIt();
 
 export default function AdminFaqForm({
   closeProjectDialog,
@@ -40,10 +47,9 @@ export default function AdminFaqForm({
       : {
           name: "",
           description: "",
-          imageUrl: "",
           pitch: "",
-          workedAs: "",
           status: "in-progress",
+          workedAs: [],
         },
   });
 
@@ -51,6 +57,11 @@ export default function AdminFaqForm({
 
   async function onSubmit(details: TprojectSchema) {
     if (isEditSession) {
+      details?.image[0]?.name === undefined
+        ? // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          (details.image = otherValues.image)
+        : (details.image = details.image[0]);
       editProject(
         { data: details, id: editId },
         {
@@ -61,12 +72,15 @@ export default function AdminFaqForm({
         },
       );
     } else {
-      createProject(details, {
-        onSuccess: () => {
-          form.reset();
-          closeProjectDialog();
+      createProject(
+        { ...details, image: details.image[0] },
+        {
+          onSuccess: () => {
+            form.reset();
+            closeProjectDialog();
+          },
         },
-      });
+      );
     }
   }
 
@@ -77,13 +91,13 @@ export default function AdminFaqForm({
       </h1>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-6 space-y-2 lg:space-y-5"
+        className="mt-4 space-y-2 lg:space-y-3"
       >
         <FormField
           control={form.control}
           name="name"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
                 Name
               </FormLabel>
@@ -103,18 +117,18 @@ export default function AdminFaqForm({
         />
         <FormField
           control={form.control}
-          name="imageUrl"
+          name="image"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
-                ImageUrl
+                Image
               </FormLabel>
               <div>
                 <FormControl>
                   <Input
-                    className="placeholder:text-xs focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
-                    placeholder="Beejakeys"
-                    {...field}
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => field.onChange(e.target.files)}
                     disabled={isWorking}
                   />
                 </FormControl>
@@ -127,7 +141,7 @@ export default function AdminFaqForm({
           control={form.control}
           name="description"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
                 Description
               </FormLabel>
@@ -149,15 +163,16 @@ export default function AdminFaqForm({
           control={form.control}
           name="status"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
                 Status
               </FormLabel>
               <div>
                 <FormControl>
                   <select
-                    onChange={field.onChange}
-                    defaultValue={field.value}
+                    disabled={isWorking}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    value={field.value}
                     className="w-full rounded-md border px-3 py-2 text-gray-500 transition-colors duration-200 placeholder:text-xs focus:border focus:border-green-500 focus:outline-none"
                   >
                     <option value="done">Done</option>
@@ -174,41 +189,36 @@ export default function AdminFaqForm({
           control={form.control}
           name="workedAs"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
                 Worked As
               </FormLabel>
               <div>
                 <FormControl>
-                  <Input
-                    className="placeholder:text-xs focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
-                    placeholder="Beejakeys"
-                    {...field}
-                    disabled={isWorking}
-                  />
+                  <ReactTag tags={field.value} onChange={field.onChange} />
                 </FormControl>
                 <FormMessage className="mt-2 text-xs sm:text-sm" />
               </div>
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name="pitch"
           render={({ field }) => (
-            <FormItem className="grid grid-cols-[6rem_1fr] justify-between gap-x-4">
+            <FormItem className="flex flex-col justify-between gap-x-4 md:grid md:grid-cols-[6rem_1fr]">
               <FormLabel className="text-blue-gray-800 mt-3 block text-left text-[1rem] font-semibold leading-6">
                 Pitch
               </FormLabel>
               <div>
-                <FormControl>
-                  <Textarea
-                    className="resize-none placeholder:text-xs focus-visible:border-0 focus-visible:ring-1 focus-visible:ring-green-500"
-                    placeholder="Your conetnt goes here.."
-                    {...field}
-                    disabled={isWorking}
-                  />
-                </FormControl>
+                <MdEditor
+                  value={field.value}
+                  style={{ height: "170px" }}
+                  renderHTML={(text) => mdParser.render(text)}
+                  onChange={({ text }) => field.onChange(text)}
+                />
+                <FormControl></FormControl>
                 <FormMessage className="mt-2 text-xs sm:text-sm" />
               </div>
             </FormItem>

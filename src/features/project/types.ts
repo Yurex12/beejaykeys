@@ -1,12 +1,18 @@
+import { Tag } from "react-tag-input";
+
 export type Project = {
-  id: number;
+  _id: string;
   name: string;
-  desc: string;
-  workedAs: string[];
-  imageUrl: string;
+  description: string;
+  workedAs: Tag[];
+  image: string;
   status: "done" | "in-progress";
-  solution: string;
-  result: string;
-  problem: string;
-  conclusion: string;
+  pitch: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ProjectName = {
+  id: string;
+  title: string;
 };

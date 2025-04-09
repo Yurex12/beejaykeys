@@ -1,12 +1,7 @@
 import LoginForm from "@/features/auth/LoginForm";
 
 function LoginPage() {
-  return (
-    <>
-      {/* <h1>Hello world</h1> */}
-      <LoginForm />
-    </>
-  );
+  return <LoginForm />;
 }
 
 export default LoginPage;

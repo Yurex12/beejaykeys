@@ -6,10 +6,11 @@ export function useLinks() {
     data: links,
     isLoading,
     error,
+    refetch: refetchLinks,
   } = useQuery({
     queryKey: ["links"],
     queryFn: getLinks,
   });
 
-  return { links, isLoading, error };
+  return { links, isLoading, refetchLinks, error };
 }
