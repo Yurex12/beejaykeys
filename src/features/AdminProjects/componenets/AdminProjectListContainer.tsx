@@ -51,15 +51,13 @@ export default function AdminProjectListContainer({
 
   let filteredProject: Project[] | [];
 
-  if (filterValue === "all") filteredProject = projects;
-
   if (filterValue === "in-progress")
     filteredProject = projects.filter(
       (project) => project.status === "in-progress",
     );
-
-  if (filterValue === "done")
+  else if (filterValue === "done")
     filteredProject = projects.filter((project) => project.status === "done");
+  else filteredProject = projects;
 
   if (!filteredProject!?.length)
     return (
@@ -76,14 +74,11 @@ export default function AdminProjectListContainer({
       (a, b) =>
         new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     );
-
-  if (sortByValue === "name") {
+  else if (sortByValue === "name") {
     sortedProject = filteredProject!
       .slice()
       .sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  if (sortByValue === "updatedAt") {
+  } else {
     sortedProject = filteredProject!.sort(
       (a, b) =>
         new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime(),
@@ -107,7 +102,7 @@ export default function AdminProjectListContainer({
               </TableRow>
             </TableHeader>
             <TableBody>
-              {sortedProject!.map((project) => (
+              {sortedProject.map((project) => (
                 <TableRow key={project._id}>
                   <TableCell className="text-xs">{project.name}</TableCell>
                   <TableCell className="text-xs">

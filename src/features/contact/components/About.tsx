@@ -17,8 +17,8 @@ function About() {
           {/* Image */}
           <div className="md:basis-1/2">
             <img
-              src="c.jpg"
-              alt=""
+              src="about.jpg"
+              alt="about"
               className="w-full rounded-md object-cover object-top md:h-[400px]"
             />
           </div>

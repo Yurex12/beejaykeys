@@ -9,7 +9,7 @@ import AdminHeader from "./components/AdminHeader";
 export default function Dashboard() {
   return (
     <SidebarProvider
-      defaultOpen={MOBILE_BREAKPOINT > window.innerWidth ? true : false}
+      defaultOpen={window.innerWidth > MOBILE_BREAKPOINT ? true : false}
     >
       <AdminHeader />
       <AppSidebar />
