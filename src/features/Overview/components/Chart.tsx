@@ -1,4 +1,5 @@
-import { TrendingUp } from "lucide-react";
+import { format, parseISO } from "date-fns";
+import { useSearchParams } from "react-router-dom";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 
 import {
@@ -18,9 +19,7 @@ import {
 import useStats from "@/hooks/useStats";
 
 import FilterOperation from "@/components/FilterOperation";
-import { format, parseISO } from "date-fns";
-import { useSearchParams } from "react-router-dom";
-import { DailyView, Stats } from "@/features/Overview/types";
+import { DailyView } from "@/features/Overview/types";
 
 const chartConfig = {
   views: {

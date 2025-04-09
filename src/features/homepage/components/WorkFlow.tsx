@@ -1,6 +1,6 @@
-import { WorkFlow as WorkFlowProps } from "../types";
+import { CardProps } from "../types";
 
-function WorkFlow({ icon, title, description }: WorkFlowProps) {
+function WorkFlow({ icon, title, description }: CardProps) {
   return (
     <div className="space-y-4 rounded-md border border-gray-200 p-5">
       {/* icon */}

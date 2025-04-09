@@ -1,8 +1,8 @@
-import React from "react";
-// import GitHubCorner from './GithubCorner';
 import type { Tag } from "react-tag-input";
 import { WithContext as ReactTags, SEPARATORS } from "react-tag-input";
 
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
 const KeyCodes = {
   comma: 188,
   enter: [10, 13],
@@ -14,13 +14,6 @@ export interface TagInputComponentProps {
 }
 
 export default function ReactTag({ tags, onChange }: TagInputComponentProps) {
-  // const [tags, setTags] = React.useState<Array<Tag>>([
-  //   { id: "Thailand", name: "Thailand", className: "" },
-  //   { id: "India", name: "India", className: "" },
-  //   { id: "Vietnam", name: "Vietnam", className: "" },
-  //   { id: "Turkey", name: "Turkey", className: "" },
-  // ]);
-
   const handleDelete = (i: number) => {
     const newTags = tags.filter((_, index) => index !== i);
     onChange(newTags);
