@@ -13,8 +13,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import contactMe from "@/assets/contact-4.png";
-
 import SpinnerMini from "@/components/SpinnerMini";
 import { useCreateMessage } from "@/features/messages/hooks/useCreateMessage";
 import { messageSchema, TmessageSchema } from "@/schema/message";
@@ -122,7 +120,7 @@ function ContactForm() {
             </Form>
           </div>
           <div className="md:basis-1/2">
-            <img src={contactMe} alt="contact me" />
+            <img src="/contact.png" alt="contact me" />
           </div>
         </div>
       </div>
