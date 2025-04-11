@@ -1,7 +1,7 @@
 import { useEffect } from "react";
+import { HiArrowLeft } from "react-icons/hi";
 import { Link, useParams } from "react-router-dom";
 import MarkdownIt from "markdown-it";
-import { HiArrowLeft } from "react-icons/hi";
 
 import LinkButton from "@/components/LinkButton";
 import Spinner from "@/components/Spinner";
@@ -20,6 +20,7 @@ function ProjectDetails() {
 
   useEffect(() => {
     if (projectId) updateViews(projectId);
+    console.log("hi");
   }, [projectId]);
 
   if (isLoading) return <Spinner />;

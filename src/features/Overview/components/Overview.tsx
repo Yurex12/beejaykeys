@@ -5,15 +5,18 @@ import Chart from "./Chart";
 import { useProjects } from "@/features/AdminProjects/hooks/useProjects";
 import useStats from "@/hooks/useStats";
 import Spinner from "@/components/Spinner";
+import NoData from "@/components/NoData";
 
 export default function Overview() {
-  const { isLoading: isFetchingUser } = useUser();
-  const { isLoading: isFetchingProjects } = useProjects();
-  const { isLoading: isFetchingStats } = useStats();
+  const { isLoading: isFetchingUser, error: userError } = useUser();
+  const { isLoading: isFetchingProjects, error: projectError } = useProjects();
+  const { isLoading: isFetchingStats, error: statsError } = useStats();
 
   const isFetching = isFetchingUser || isFetchingStats || isFetchingProjects;
 
   if (isFetching) return <Spinner />;
+
+  if (userError || projectError || statsError) return <NoData />;
 
   return (
     <section>

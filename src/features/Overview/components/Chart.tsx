@@ -115,7 +115,7 @@ export default function Chart() {
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="text-muted-foreground leading-none">
-          Showing Project views for the last {filteredStats!?.length} days
+          Showing Daily views for the last {filteredStats!?.length} days
         </div>
       </CardFooter>
     </Card>

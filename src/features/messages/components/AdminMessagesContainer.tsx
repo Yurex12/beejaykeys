@@ -1,9 +1,12 @@
+import { useState } from "react";
+
 import { ConfirmDelete } from "@/components/ConfirmDelete";
 import NoData from "@/components/NoData";
-import { useState } from "react";
+
+import AdminMsg from "./AdminMsg";
+
 import { useDeleteMessage } from "../hooks/useDeleteMessage";
 import { useMessages } from "../hooks/useMessages";
-import AdminMsg from "./AdminMsg";
 
 function AdminMessagesContainer() {
   const [open, setOpen] = useState(false);
@@ -26,8 +29,6 @@ function AdminMessagesContainer() {
   }
   if (!messages?.length)
     return <NoData content="No Messages to display at the moment." />;
-
-  console.log(messages);
 
   return (
     <>

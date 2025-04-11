@@ -2,7 +2,7 @@ import LinkButton from "@/components/LinkButton";
 
 function Hero() {
   return (
-    <section className="mx-auto h-[550px] max-w-[1600px] bg-[url('/hero7.jpg')] bg-cover bg-center md:h-[600px] xl:h-screen">
+    <section className="mx-auto h-[550px] max-w-[1600px] bg-[url('/hero.jpg')] bg-cover bg-center md:h-[600px] xl:h-screen">
       <div className="flex h-full items-center justify-center bg-black bg-opacity-30">
         <div className="mt-14 space-y-6 px-4 lg:space-y-10">
           <h1 className="text-center text-2xl font-extrabold text-white sm:space-y-2 sm:text-3xl md:space-y-4 md:text-5xl xl:space-y-6 xl:text-6xl">

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import api from "./api";
 import { Stats } from "@/features/Overview/types";
 
-const statsId = "67e6883bda03a258e599bec4";
+const statsId = "67f8aa9cb72c8460f2f65c60";
 
 export async function getStats() {
   try {
@@ -16,15 +16,14 @@ export async function getStats() {
 export async function updateStats() {
   let deviceId = localStorage.getItem("deviceId");
 
-  if (deviceId) return;
-
-  const newDeviceId = uuidv4();
-  localStorage.setItem("deviceId", newDeviceId);
+  if (!deviceId) {
+    deviceId = uuidv4();
+    localStorage.setItem("deviceId", deviceId);
+  }
 
   try {
-    return (
-      await api.post<Stats>(`/stats/${statsId}`, { ipAddress: newDeviceId })
-    ).data;
+    return (await api.post<Stats>(`/stats/${statsId}`, { ipAddress: deviceId }))
+      .data;
   } catch (error) {
     console.error("Something went wrong", error);
   }
