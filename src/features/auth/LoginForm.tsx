@@ -1,5 +1,6 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
@@ -12,11 +13,18 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginSchema, TLoginSchema } from "@/schema/userSchema";
+import Spinner from "@/components/Spinner";
+
 import { useLogin } from "./hooks/useLogin";
+import { useUser } from "./hooks/useUser";
+
+import { loginSchema, TLoginSchema } from "@/schema/userSchema";
+import { useEffect } from "react";
 
 export default function LoginForm() {
   const { login, isLoading } = useLogin();
+  const { isAuthenticated, isLoading: isLoadingUserData } = useUser();
+  const navigate = useNavigate();
 
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -31,6 +39,12 @@ export default function LoginForm() {
       onSuccess: () => form.reset(),
     });
   }
+
+  useEffect(() => {
+    navigate("/dashboard/overview");
+  }, [isAuthenticated]);
+
+  if (isLoadingUserData) return <Spinner />;
 
   return (
     <div className="mx-auto mt-20 max-w-sm px-4">

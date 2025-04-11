@@ -22,7 +22,10 @@ function Header() {
           handleCloseSheet={handleCloseSheet}
         />
         <AdminButton />
-        <HiMenu className="text-gray-600 lg:hidden" onClick={handleOpenSheet} />
+        <HiMenu
+          className="text-3xl text-gray-600 lg:hidden"
+          onClick={handleOpenSheet}
+        />
       </div>
     </header>
   );

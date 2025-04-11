@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import { Project as ProjectProps } from "../types";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Project({
   image,
@@ -20,6 +21,7 @@ function Project({
         alt={name}
         className="h-[26rem] w-full rounded-md object-cover group-hover:scale-95 group-hover:duration-300"
       />
+
       <h1 className="text-xl font-extrabold text-gray-800">{name}</h1>
       <p>{description}</p>
       <div className="flex flex-1 items-start gap-x-2">
