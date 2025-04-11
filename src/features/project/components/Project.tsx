@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 
 import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import { Project as ProjectProps } from "../types";
-import { Skeleton } from "@/components/ui/skeleton";
 
 function Project({
   image,
