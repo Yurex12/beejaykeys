@@ -41,8 +41,8 @@ export default function LoginForm() {
   }
 
   useEffect(() => {
-    navigate("/dashboard/overview");
-  }, [isAuthenticated]);
+    if (!isLoadingUserData && isAuthenticated) navigate("/dashboard/overview");
+  }, [isAuthenticated, isLoadingUserData]);
 
   if (isLoadingUserData) return <Spinner />;
 
