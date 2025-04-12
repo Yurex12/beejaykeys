@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,10 +13,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-import { useUser } from "@/features/auth/hooks/useUser";
 import { TUpdateUserSchema, updateUserSchema } from "@/schema/userSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+
+import { useUser } from "@/features/auth/hooks/useUser";
 import { useUpadteUserInfo } from "../hooks/useUpadteUserInfo";
 
 function UpdateUserInfoForm() {

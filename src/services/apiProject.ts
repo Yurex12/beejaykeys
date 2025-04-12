@@ -16,7 +16,7 @@ export async function getProjects() {
   try {
     return (await api.get<ProjectsData>("/projects")).data.projects;
   } catch (error: any) {
-    console.error("Error:", error);
+    // console.error("Error:", error);
 
     throw new Error(
       error.response?.data?.message || "Error fetching Projects.",
@@ -28,7 +28,7 @@ export async function getProject(id: string) {
   try {
     return (await api.get<ProjectData>(`/projects/${id}`)).data.project;
   } catch (error: any) {
-    console.error("Error:", error);
+    // console.error("Error:", error);
 
     throw new Error(error.response?.data?.message || "Error fetching Project.");
   }
@@ -46,7 +46,7 @@ export async function createProject(data: TprojectSchema) {
   try {
     await api.post("/projects", formData);
   } catch (error: any) {
-    console.error("Error creating Project:", error);
+    // console.error("Error creating Project:", error);
     throw new Error(error.response?.data?.message || "Error creating Project.");
   }
 }
@@ -63,23 +63,19 @@ export async function editProject(data: TprojectSchema, id: string) {
     formData.append("image", data.image);
   }
 
-  console.log("Image Type:", typeof data.image); // Should be "object"
-  console.log("Image Instance:", data.image instanceof File);
-
   try {
     await api.put(`/projects/${id}`, formData);
   } catch (error: any) {
-    console.error("Error editing Project:", error);
+    // console.error("Error editing Project:", error);
     throw new Error(error.response?.data?.message || "Error editing Project.");
   }
 }
 
 export async function deleteProject(id: string) {
   try {
-    // await new Promise((res) => setTimeout(res, 10000));
     await api.delete(`/projects/${id}`);
   } catch (error: any) {
-    console.error("Error deleting Projects:", error);
+    // console.error("Error deleting Projects:", error);
     throw new Error(error.response?.data?.message || "Error deleting Project.");
   }
 }
@@ -89,7 +85,7 @@ export async function incrementProjectViews(projectId: string) {
     return (
       await api.patch<ProjectData>(`/projects/increment-views/${projectId}`)
     ).data.project;
-  } catch (error) {
-    console.error("Failed to increment view count:", error);
+  } catch (error: any) {
+    // console.error("Failed to increment view count:", error);
   }
 }

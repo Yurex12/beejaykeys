@@ -8,7 +8,7 @@ export async function login({ email, password }: Partial<TUserSchema>) {
   try {
     return (await api.post<UserData>(`/users/login`, { email, password })).data;
   } catch (error: any) {
-    console.error("Login error:", error);
+    // console.error("Login error:", error);
 
     throw new Error(error.response?.data?.message || "Login failed");
   }
@@ -18,7 +18,7 @@ export async function logout() {
   try {
     return (await api.post<{ message: string }>("/users/logout")).data;
   } catch (error: any) {
-    console.error("Logout error:", error);
+    // console.error("Logout error:", error);
 
     throw new Error(error.response?.data?.message || "Logout failed");
   }
@@ -37,7 +37,7 @@ export async function updateUserInfo(data: TUpdateUserSchema, userId: string) {
     return (await api.patch<UserData>(`/users/update-info/${userId}`, formData))
       .data;
   } catch (error: any) {
-    console.error("Error updating user info.:", error);
+    // console.error("Error updating user info.:", error);
 
     throw new Error(
       error.response?.data?.message || "Error updating user info.",
@@ -57,7 +57,7 @@ export async function updateUserPassword(
       )
     ).data;
   } catch (error: any) {
-    console.error("Error updating password.:", error);
+    // console.error("Error updating password.:", error);
 
     throw new Error(
       error.response?.data?.message || "Error updating password.",
@@ -77,7 +77,7 @@ export async function getUserData() {
   try {
     return (await api.get<UserData>(`/users/user/${user.userId}`)).data;
   } catch (error: any) {
-    console.error("Error getting user data:", error);
+    // console.error("Error getting user data:", error);
 
     throw new Error(
       error.response?.data?.message || "Error getting user data.",

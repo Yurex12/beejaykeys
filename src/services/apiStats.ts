@@ -8,8 +8,9 @@ const statsId = "67f8aa9cb72c8460f2f65c60";
 export async function getStats() {
   try {
     return (await api.get<Stats>(`/stats/${statsId}`)).data;
-  } catch (error) {
-    console.error("Something went wrong", error);
+  } catch (error: any) {
+    // console.error("Something went wrong", error);
+    // throw new Error(error.response?.data?.message || "Error fetching stats.");
   }
 }
 
@@ -25,16 +26,6 @@ export async function updateStats() {
     return (await api.post<Stats>(`/stats/${statsId}`, { ipAddress: deviceId }))
       .data;
   } catch (error) {
-    console.error("Something went wrong", error);
+    // console.error("Something went wrong", error);
   }
 }
-
-// export async function getIpAddress() {
-//   try {
-//     return (
-//       await axios.get<{ ip: string }>("https://api64.ipify.org?format=json")
-//     ).data.ip;
-//   } catch (error) {
-//     console.error("Error fetching IP:", error);
-//   }
-// }
