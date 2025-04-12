@@ -8,6 +8,7 @@ import Spinner from "@/components/Spinner";
 
 import { useIncrementProjectViews } from "@/features/AdminProjects/hooks/useIncrementProjectViews";
 import { useProject } from "@/features/AdminProjects/hooks/useProject";
+import ImageSkeleton from "@/components/ImageSkeleton";
 
 const md = new MarkdownIt();
 
@@ -20,7 +21,6 @@ function ProjectDetails() {
 
   useEffect(() => {
     if (projectId) updateViews(projectId);
-    console.log("hi");
   }, [projectId]);
 
   if (isLoading) return <Spinner />;
@@ -58,10 +58,17 @@ function ProjectDetails() {
         </div>
         <div className="grid grid-cols-1 gap-6 md:mx-auto md:grid-cols-2 md:gap-10">
           {/* left item */}
-          <img
+          {/* <img
             src={project.image}
             alt={project.name}
             className="mx-auto h-96 w-full rounded-md object-cover md:h-[38rem] md:w-full"
+          /> */}
+
+          <ImageSkeleton
+            src={project.image}
+            alt={project.name}
+            className="mx-auto h-96 w-full rounded-md object-cover md:h-[38rem] md:w-full"
+            skeletonClassName="h-96 w-full md:h-[38rem] md:w-full rounded-md"
           />
 
           {/* right item */}

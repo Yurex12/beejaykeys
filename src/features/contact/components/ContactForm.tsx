@@ -16,6 +16,7 @@ import { Textarea } from "@/components/ui/textarea";
 import SpinnerMini from "@/components/SpinnerMini";
 import { useCreateMessage } from "@/features/messages/hooks/useCreateMessage";
 import { messageSchema, TmessageSchema } from "@/schema/message";
+import ImageSkeleton from "@/components/ImageSkeleton";
 
 function ContactForm() {
   const { createMessage, isDeleting } = useCreateMessage();
@@ -120,7 +121,13 @@ function ContactForm() {
             </Form>
           </div>
           <div className="md:basis-1/2">
-            <img src="/contact.png" alt="contact me" />
+            {/* <img src="/contact.png" alt="contact me" /> */}
+            <ImageSkeleton
+              src="/contact.png"
+              alt="contact"
+              className="object-cover"
+              skeletonClassName="w-full h-20 md:h-60 rounded-md"
+            />
           </div>
         </div>
       </div>

@@ -1,3 +1,4 @@
+import ImageSkeleton from "@/components/ImageSkeleton";
 import LinkButton from "@/components/LinkButton";
 
 function About() {
@@ -16,11 +17,18 @@ function About() {
         <div className="flex flex-col items-center gap-y-8 md:flex-row-reverse md:gap-x-20 md:gap-y-0">
           {/* Image */}
           <div className="md:basis-1/2">
-            <img
-              src="about.jpg"
+            <ImageSkeleton
+              src="/about.jpg"
               alt="about"
               className="w-full rounded-md object-cover object-top md:h-[400px]"
+              skeletonClassName="w-full h-20 md:h-[400px] rounded-md"
             />
+            {/* <img
+              src="about.jpg"
+              src="/about.jpg"
+              alt="about"
+              className="w-full rounded-md object-cover object-top md:h-[400px]"
+            /> */}
           </div>
 
           {/* Who am I */}

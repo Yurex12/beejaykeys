@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { HiOutlineArrowRightCircle } from "react-icons/hi2";
 import { Project as ProjectProps } from "../types";
+import ImageSkeleton from "@/components/ImageSkeleton";
 
 function Project({
   image,
@@ -12,14 +13,20 @@ function Project({
 }: Partial<ProjectProps>) {
   return (
     <Link
-      className="group flex flex-col gap-y-4 rounded-md"
+      className="group flex flex-col gap-y-4 rounded-md border border-gray-200 p-5"
       to={`/portfolio/projects/${projectId}`}
     >
-      <img
+      <ImageSkeleton
         src={image}
         alt={name}
         className="h-[26rem] w-full rounded-md object-cover group-hover:scale-95 group-hover:duration-300"
+        skeletonClassName="h-[26rem] w-full rounded-md"
       />
+      {/* <img
+        src={image}
+        alt={name}
+        className="h-[26rem] w-full rounded-md object-cover group-hover:scale-95 group-hover:duration-300"
+      /> */}
 
       <h1 className="text-xl font-extrabold text-gray-800">{name}</h1>
       <p>{description}</p>

@@ -28,6 +28,7 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 import { useUpdateStats } from "./hooks/useUpdateStats.ts";
 import { HiArrowUp } from "react-icons/hi";
+import ScrollPageToTop from "./components/ScrollPageToTop.tsx";
 
 function App() {
   const { updateStats } = useUpdateStats();
@@ -65,6 +66,7 @@ function App() {
         className="bottom-20 flex h-10 w-8 items-center justify-center rounded-lg shadow"
       />
 
+      <ScrollPageToTop />
       <Routes>
         <Route element={<AppLayout />}>
           <Route index element={<Navigate replace to="/home" />} />
