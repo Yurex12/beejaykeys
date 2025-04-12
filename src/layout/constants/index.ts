@@ -12,16 +12,16 @@ export const footerLinks: FooterLink[] = [
     title: "Services",
     links: [
       {
+        name: `Shiller`,
+        href: "portfolio?project=shiller",
+      },
+      {
         name: "Community Moderator",
-        href: "community-mod",
+        href: "portfolio?project=community-moderator",
       },
       {
-        name: `Content Writing`,
-        href: "content-writing",
-      },
-      {
-        name: `Ambassador`,
-        href: "ambassador",
+        name: "Project Ambassador",
+        href: "portfolio?project=project-ambassador",
       },
     ],
   },

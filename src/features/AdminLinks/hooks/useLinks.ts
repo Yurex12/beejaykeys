@@ -10,6 +10,7 @@ export function useLinks() {
   } = useQuery({
     queryKey: ["links"],
     queryFn: getLinks,
+    // retry: false,
   });
 
   return { links, isLoading, refetchLinks, error };

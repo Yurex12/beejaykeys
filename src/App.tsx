@@ -29,6 +29,7 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import { useUpdateStats } from "./hooks/useUpdateStats.ts";
 import { HiArrowUp } from "react-icons/hi";
 import ScrollPageToTop from "./components/ScrollPageToTop.tsx";
+import NotFound from "./components/NotFound.tsx";
 
 function App() {
   const { updateStats } = useUpdateStats();
@@ -108,6 +109,7 @@ function App() {
           <Route path="dashboard/messages" element={<AdminMessagesPage />} />
           <Route path="dashboard/user" element={<UserSettingsPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );
