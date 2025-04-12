@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Project } from "../types";
 import { FaCheckCircle, FaHourglassHalf } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ImageSkeleton from "@/components/ImageSkeleton";
 
 function AdminProjects({
   name,
@@ -13,10 +14,16 @@ function AdminProjects({
   return (
     <div className="space-y-3 rounded-md border border-gray-200 p-5">
       <div className="relative size-60">
-        <img
+        {/* <img
           src={image}
           alt={name}
           className="size-60 rounded-md object-cover"
+        /> */}
+        <ImageSkeleton
+          src={image}
+          alt={name}
+          className="size-60 rounded-md object-cover"
+          skeletonClassName="size-60 rounded-md"
         />
 
         {status === "in-progress" ? (
