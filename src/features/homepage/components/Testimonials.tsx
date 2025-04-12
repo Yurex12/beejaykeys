@@ -10,6 +10,7 @@ function Testimonials() {
   const { testimonials, error, isLoading } = useTestimonials();
 
   if (error) return null;
+  if (!testimonials?.length) return null;
 
   return (
     <section>

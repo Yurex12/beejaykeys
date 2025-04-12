@@ -7,7 +7,7 @@ function AnalyticsCardContainer() {
   const { projects } = useProjects();
   const { stats } = useStats();
 
-  if (!projects) return null;
+  if (!projects || !projects?.length) return null;
   if (!stats) return null;
 
   const mostViewedProject = projects.slice().sort((a, b) => b.views - a.views);
