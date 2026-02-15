@@ -10,8 +10,7 @@ export function useProject(projectId?: string) {
     refetch: refetchProject,
   } = useQuery({
     queryKey: ["project", projectId],
-    queryFn: () =>
-      projectId ? getProject(projectId) : Promise.reject("No project ID"),
+    queryFn: () => getProject(projectId!),
     enabled: !!projectId,
   });
 

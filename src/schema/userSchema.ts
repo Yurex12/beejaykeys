@@ -50,7 +50,7 @@ export const updatePasswordSchema = z
 
 export const loginSchema = z.object({
   email: z.string().email({ message: "Please enter a correct Email" }),
-  password: z.string().min(6, { message: "Enter at least 6 characters." }),
+  password: z.string().nonempty("Enter password"),
 });
 
 export type TUserSchema = z.infer<typeof userSchema>;

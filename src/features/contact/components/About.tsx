@@ -3,8 +3,8 @@ import LinkButton from "@/components/LinkButton";
 
 function About() {
   return (
-    <section>
-      <div className="container mx-auto mt-24 space-y-5 px-6 sm:mt-28 md:mt-32">
+    <section className="mx-auto w-full max-w-[1440px] px-6">
+      <div className="mt-24 space-y-5 sm:mt-28 md:mt-32">
         {/* Heading */}
         <div className="flex items-center gap-x-4 md:gap-x-8">
           <h1 className="text-2xl font-extrabold text-gray-800 sm:text-3xl lg:text-4xl xl:text-5xl">
@@ -23,12 +23,6 @@ function About() {
               className="w-full rounded-md object-cover object-top md:h-[400px]"
               skeletonClassName="w-full h-20 md:h-[400px] rounded-md"
             />
-            {/* <img
-              src="about.jpg"
-              src="/about.jpg"
-              alt="about"
-              className="w-full rounded-md object-cover object-top md:h-[400px]"
-            /> */}
           </div>
 
           {/* Who am I */}

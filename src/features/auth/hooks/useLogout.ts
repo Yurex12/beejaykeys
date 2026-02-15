@@ -11,7 +11,7 @@ export function useLogout() {
     mutationFn: logoutApi,
     onSuccess: () => {
       localStorage.removeItem("userInfo");
-      queryClient.removeQueries();
+      queryClient.clear();
       navigate("/home", { replace: true });
     },
     onError: (err) => toast.error(err.message),

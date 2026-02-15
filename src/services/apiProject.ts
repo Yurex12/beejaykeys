@@ -1,6 +1,7 @@
+import api from "./api";
+
 import { Project } from "@/features/AdminProjects/types";
 import { TprojectSchema } from "@/schema/projectSchema";
-import api from "./api";
 
 type ProjectsData = {
   message: string;
@@ -29,7 +30,6 @@ export async function getProject(id: string) {
     return (await api.get<ProjectData>(`/projects/${id}`)).data.project;
   } catch (error: any) {
     // console.error("Error:", error);
-
     throw new Error(error.response?.data?.message || "Error fetching Project.");
   }
 }

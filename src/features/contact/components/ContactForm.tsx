@@ -35,7 +35,7 @@ function ContactForm() {
   }
   return (
     <section>
-      <div className="container mx-auto mt-24 px-6 md:mt-32">
+      <div className="mt-24 md:mt-32">
         {/* Heading */}
         <div className="space-y-2 text-center text-2xl font-extrabold text-gray-800 sm:text-3xl lg:text-4xl xl:text-5xl">
           <h1>Have an Idea?</h1>
@@ -43,7 +43,7 @@ function ContactForm() {
         </div>
 
         <div className="flex flex-col items-center justify-between gap-y-6 md:flex-row md:gap-x-10">
-          <div className="mx-auto mt-5 w-full max-w-md basis-1/2 rounded-xl border border-gray-100 p-5 md:mt-10">
+          <div className="mt-5 w-full max-w-md basis-1/2 rounded-xl border border-gray-100 p-5 md:mt-10">
             <Form {...form}>
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
@@ -126,7 +126,7 @@ function ContactForm() {
               src="/contact.png"
               alt="contact"
               className="object-cover"
-              skeletonClassName="w-full h-20 md:h-60 rounded-md"
+              skeletonClassName="w-full h-20 md:h-[400px] rounded-md"
             />
           </div>
         </div>

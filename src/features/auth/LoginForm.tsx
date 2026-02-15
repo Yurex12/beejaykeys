@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
+import Spinner from "@/components/Spinner";
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,24 +16,22 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Spinner from "@/components/Spinner";
 
 import { useLogin } from "./hooks/useLogin";
 import { useUser } from "./hooks/useUser";
 
 import { loginSchema, TLoginSchema } from "@/schema/userSchema";
-import { useEffect } from "react";
 
 export default function LoginForm() {
   const { login, isLoading } = useLogin();
   const { isAuthenticated, isLoading: isLoadingUserData } = useUser();
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "admin@gmail.com",
+      password: "123456",
     },
   });
 
@@ -39,12 +40,10 @@ export default function LoginForm() {
       onSuccess: () => form.reset(),
     });
   }
-
-  useEffect(() => {
-    if (!isLoadingUserData && isAuthenticated) navigate("/dashboard/overview");
-  }, [isAuthenticated, isLoadingUserData]);
-
   if (isLoadingUserData) return <Spinner />;
+
+  if (!isLoadingUserData && isAuthenticated)
+    return <Navigate to="/dashboard/overview" />;
 
   return (
     <div className="mx-auto mt-20 max-w-sm px-4">
@@ -85,12 +84,26 @@ export default function LoginForm() {
                   Password
                 </FormLabel>
                 <FormControl>
-                  <Input
-                    className="focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
-                    placeholder="*********"
-                    {...field}
-                    disabled={form.formState.isSubmitting}
-                  />
+                  <div className="relative">
+                    <Input
+                      className="pr-10 focus-visible:border-0 focus-visible:ring-2 focus-visible:ring-green-500"
+                      placeholder="*********"
+                      type={showPassword ? "text" : "password"}
+                      {...field}
+                      disabled={form.formState.isSubmitting}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="text-muted-foreground hover:text-foreground absolute right-3 top-1/2 -translate-y-1/2"
+                    >
+                      {showPassword ? (
+                        <EyeOff className="h-4 w-4" />
+                      ) : (
+                        <Eye className="h-4 w-4" />
+                      )}
+                    </button>
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

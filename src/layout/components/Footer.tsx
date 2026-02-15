@@ -2,6 +2,7 @@ import Logo from "./Logo";
 
 import SocialLinks from "./SocialLinks";
 import { footerLinks } from "../constants";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -27,7 +28,7 @@ function Footer() {
               <ul className="mt-3 space-y-3">
                 {footerLink.links.map((link) => (
                   <li key={link.href}>
-                    <a href={link.href}>{link.name}</a>
+                    <Link to={link.href}>{link.name}</Link>
                   </li>
                 ))}
               </ul>

@@ -5,10 +5,10 @@ const ScrollPageToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Smooth scroll to top
     window.scrollTo({
       top: 0,
-      behavior: "smooth",
+      left: 0,
+      behavior: "instant",
     });
   }, [pathname]);
 

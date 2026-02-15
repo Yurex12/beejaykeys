@@ -59,16 +59,14 @@ function ProjectsContainer() {
     return <NoData content="No projects found." />;
 
   return (
-    <section>
-      <div className="container mx-auto mt-4 px-6 md:mt-8">
-        {/* content */}
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
-          {filteredProjects!.map((project) => (
-            <Project {...project} key={project._id} />
-          ))}
-        </div>
+    <div className="mt-4 md:mt-8">
+      {/* content */}
+      <div className="grid grid-cols-1 gap-10 md:grid-cols-2 xl:grid-cols-3">
+        {filteredProjects!.map((project) => (
+          <Project {...project} key={project._id} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }
 

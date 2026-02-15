@@ -6,6 +6,7 @@ export default function AnalyticsHeader() {
   const { user } = useUser();
 
   if (!user) return null;
+
   return (
     <div className="flex flex-col-reverse justify-between gap-y-4 rounded-sm border border-gray-200 px-6 py-4 md:flex-row">
       <div className="space-y-1">

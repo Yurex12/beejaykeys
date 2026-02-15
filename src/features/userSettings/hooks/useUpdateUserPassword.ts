@@ -1,19 +1,12 @@
-import { TUpdatePasswordSchema } from "@/schema/userSchema";
 import { updateUserPassword } from "@/services/apiAuth";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
 export default function useUpdateUserPassword() {
   const { mutate: updatePassword, isPending: isUpdating } = useMutation({
-    mutationFn: ({
-      data,
-      userId,
-    }: {
-      data: TUpdatePasswordSchema;
-      userId: string;
-    }) => updateUserPassword(data, userId),
+    mutationFn: updateUserPassword,
     onSuccess: () => {
-      toast.success("Password upadated Succesfully");
+      toast.success("Password updated Successfully");
     },
     onError: (err) => toast.error(err.message),
   });

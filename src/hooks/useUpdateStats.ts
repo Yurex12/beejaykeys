@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useUpdateStats() {
   const queryClient = useQueryClient();
-
+  
   const {
     mutate: updateStats,
     isPending: isUpdating,

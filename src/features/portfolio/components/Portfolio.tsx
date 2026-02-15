@@ -10,10 +10,10 @@ function Portfolio() {
   if (isLoading) return <Spinner />;
   if (error) return <ErrorPage onRetry={refetchProjects} />;
   return (
-    <>
+    <section className="mx-auto w-full max-w-[1440px] px-6">
       <ProjectFilter />
       <ProjectsContainer />
-    </>
+    </section>
   );
 }
 

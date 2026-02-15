@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import SpinnerMini from "./SpinnerMini";
 import { Button } from "./ui/button";
+import { Info } from "lucide-react";
 
 type ConfirmDeleteProps = {
   resourceName: string;
@@ -35,6 +36,15 @@ export function ConfirmDelete({
             Are you sure you want to delete this {resourceName} permanently?
             This action cannot be undone.
           </AlertDialogDescription>
+
+          <div className="mt-3 flex items-start gap-2 rounded-lg border border-blue-100 bg-blue-50 p-3 text-sm text-blue-800">
+            <Info className="mt-0.5 h-4 w-4 shrink-0" />
+            <p>
+              <b>Note:</b> Deletion is currently disabled for this demo.
+              Everything works, but we want to keep the data intact for other
+              visitors to explore! 🥴
+            </p>
+          </div>
         </AlertDialogHeader>
         <AlertDialogFooter className="flex flex-row justify-end gap-x-4">
           <Button
@@ -46,7 +56,8 @@ export function ConfirmDelete({
             Cancel
           </Button>
           <Button
-            disabled={disabled}
+            disabled={true}
+            // disabled={disabled}
             onClick={onConfirm}
             className="w-20 bg-red-500 hover:bg-red-600"
           >

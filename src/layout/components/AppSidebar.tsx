@@ -89,7 +89,7 @@ const items: Item[] = [
     icon: MessageCircleMoreIcon,
   },
   {
-    title: "Users",
+    title: "User",
     url: "dashboard/user",
     icon: UserIcon,
   },

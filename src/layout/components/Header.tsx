@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <header className="fixed top-0 z-50 mx-auto flex w-full items-center justify-between bg-white shadow-sm">
-      <div className="mx-auto flex max-w-[1440px] flex-1 items-center justify-between px-7 py-6">
+      <div className="mx-auto flex max-w-[1440px] flex-1 items-center justify-between p-6">
         <Logo />
         <NavBar />
         <MobileNav
@@ -21,7 +21,9 @@ function Header() {
           isSheetOpen={isSheetOpen}
           handleCloseSheet={handleCloseSheet}
         />
-        <AdminButton />
+        <div className="hidden sm:block">
+          <AdminButton />
+        </div>
         <HiMenu
           className="text-3xl text-gray-600 lg:hidden"
           onClick={handleOpenSheet}

@@ -14,11 +14,6 @@ function AdminProjects({
   return (
     <div className="space-y-3 rounded-md border border-gray-200 p-5">
       <div className="relative size-60">
-        {/* <img
-          src={image}
-          alt={name}
-          className="size-60 rounded-md object-cover"
-        /> */}
         <ImageSkeleton
           src={image}
           alt={name}

@@ -1,3 +1,6 @@
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+
 import SpinnerMini from "@/components/SpinnerMini";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,14 +17,10 @@ import {
   TUpdatePasswordSchema,
   updatePasswordSchema,
 } from "@/schema/userSchema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
 import useUpdateUserPassword from "../hooks/useUpdateUserPassword";
-import { useUser } from "@/features/auth/hooks/useUser";
 
 function UpdateUserPasswordForm() {
   const { updatePassword, isUpdating } = useUpdateUserPassword();
-  const { user } = useUser();
 
   const form = useForm<TUpdatePasswordSchema>({
     resolver: zodResolver(updatePasswordSchema),
@@ -33,8 +32,11 @@ function UpdateUserPasswordForm() {
   });
 
   function onSubmit(data: TUpdatePasswordSchema) {
-    updatePassword({ data, userId: user!.userId });
-    form.reset();
+    updatePassword(data, {
+      onSuccess() {
+        form.reset();
+      },
+    });
   }
   return (
     <Form {...form}>
@@ -111,11 +113,14 @@ function UpdateUserPasswordForm() {
           <Button
             type="submit"
             className="w-fit bg-green-500 px-8 text-white hover:bg-green-600 disabled:cursor-not-allowed"
-            disabled={isUpdating}
+            disabled={true}
+            // disabled={isUpdating}
           >
             {isUpdating ? <SpinnerMini /> : "Update Password"}
           </Button>
         </div>
+
+        <p>You're not allowed to change password</p>
       </form>
     </Form>
   );

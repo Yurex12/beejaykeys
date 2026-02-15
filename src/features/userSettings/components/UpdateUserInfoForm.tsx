@@ -16,10 +16,10 @@ import { Input } from "@/components/ui/input";
 import { TUpdateUserSchema, updateUserSchema } from "@/schema/userSchema";
 
 import { useUser } from "@/features/auth/hooks/useUser";
-import { useUpadteUserInfo } from "../hooks/useUpadteUserInfo";
+import { useUpdateUserInfo } from "../hooks/useUpdateUserInfo";
 
 function UpdateUserInfoForm() {
-  const { updateInfo, isUpdating } = useUpadteUserInfo();
+  const { updateInfo, isUpdating } = useUpdateUserInfo();
   const { user } = useUser();
 
   const form = useForm<TUpdateUserSchema>({
@@ -34,10 +34,7 @@ function UpdateUserInfoForm() {
           // @ts-ignore
           (data.image = user.image)
         : (data.image = data.image[0]);
-    updateInfo({
-      data: { ...data, image: updatedImage },
-      userId: user!.userId,
-    });
+    updateInfo({ ...data, image: updatedImage });
   }
 
   return (

@@ -10,12 +10,14 @@ function HomePage() {
   return (
     <>
       <Hero />
-      <BrandWorkFlow />
-      <BrandServices />
-      <KeyMetricsImpact />
-      <NotableWorks />
-      <HireMe />
-      <Testimonials />
+      <section className="mx-auto w-full max-w-[1440px] px-6">
+        <BrandWorkFlow />
+        <BrandServices />
+        <KeyMetricsImpact />
+        <NotableWorks />
+        <HireMe />
+        <Testimonials />
+      </section>
     </>
   );
 }

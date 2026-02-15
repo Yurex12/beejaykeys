@@ -2,14 +2,13 @@ import { User, UserPasswordData } from "@/features/auth/types";
 import { TUpdateUserSchema, TUserSchema } from "../schema/userSchema";
 import api from "./api";
 
-type UserData = { message: string; user: User; isAuthenticated: boolean };
+type UserData = { message: string; user: User };
 
 export async function login({ email, password }: Partial<TUserSchema>) {
   try {
-    return (await api.post<UserData>(`/users/login`, { email, password })).data;
+    return (await api.post<UserData>(`/users/login`, { email, password })).data
+      .user;
   } catch (error: any) {
-    // console.error("Login error:", error);
-
     throw new Error(error.response?.data?.message || "Login failed");
   }
 }
@@ -24,7 +23,7 @@ export async function logout() {
   }
 }
 
-export async function updateUserInfo(data: TUpdateUserSchema, userId: string) {
+export async function updateUserInfo(data: TUpdateUserSchema) {
   const formData = new FormData();
 
   formData.append("email", data.email);
@@ -34,8 +33,8 @@ export async function updateUserInfo(data: TUpdateUserSchema, userId: string) {
   }
 
   try {
-    return (await api.patch<UserData>(`/users/update-info/${userId}`, formData))
-      .data;
+    return (await api.patch<UserData>(`/users/update-info`, formData)).data
+      .user;
   } catch (error: any) {
     // console.error("Error updating user info.:", error);
 
@@ -45,16 +44,10 @@ export async function updateUserInfo(data: TUpdateUserSchema, userId: string) {
   }
 }
 
-export async function updateUserPassword(
-  data: UserPasswordData,
-  userId: string,
-) {
+export async function updateUserPassword(data: UserPasswordData) {
   try {
     return (
-      await api.patch<{ message: string }>(
-        `/users/update-password/${userId}`,
-        data,
-      )
+      await api.patch<{ message: string }>(`/users/update-password`, data)
     ).data;
   } catch (error: any) {
     // console.error("Error updating password.:", error);
@@ -66,16 +59,8 @@ export async function updateUserPassword(
 }
 
 export async function getUserData() {
-  const user: User | null = localStorage.getItem("userInfo")
-    ? JSON.parse(localStorage.getItem("userInfo")!)
-    : null;
-
-  if (!user?.userId) {
-    throw new Error("something went wrong!!!");
-  }
-
   try {
-    return (await api.get<UserData>(`/users/user/${user.userId}`)).data;
+    return (await api.get<UserData>(`/users/user-data`)).data.user;
   } catch (error: any) {
     // console.error("Error getting user data:", error);
 

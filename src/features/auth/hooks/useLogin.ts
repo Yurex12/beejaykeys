@@ -15,10 +15,9 @@ export function useLogin() {
   } = useMutation({
     mutationFn: loginApi,
     onSuccess: (data) => {
-      toast.success("Login succesful");
+      toast.success("Login successful");
       queryClient.setQueryData(["user"], data);
-      localStorage.setItem("userInfo", JSON.stringify(data.user));
-      navigate("/dashboard/overview");
+      navigate("/dashboard/overview", { replace: true });
     },
     onError: (err) => toast.error(err.message),
   });

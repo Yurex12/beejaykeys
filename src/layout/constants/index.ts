@@ -29,12 +29,12 @@ export const footerLinks: FooterLink[] = [
     title: "Company",
     links: [
       {
-        name: "About Us",
-        href: "about-us",
+        name: "About Me",
+        href: "about-me",
       },
       {
-        name: "Contact Us",
-        href: "contact-us",
+        name: "Contact Me",
+        href: "contact-me",
       },
       {
         name: "Support",
