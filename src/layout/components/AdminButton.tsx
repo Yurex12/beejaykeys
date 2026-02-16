@@ -1,13 +1,7 @@
-import { Skeleton } from "@/components/ui/skeleton";
-import { useUser } from "@/features/auth/hooks/useUser";
 import { HiDatabase } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
 function AdminButton() {
-  const { isLoading } = useUser();
-
-  if (isLoading) return <Skeleton className="h-9 w-40" />;
-
   return (
     <Link
       to="/dashboard/overview"
